@@ -5,24 +5,10 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-} from 'react-native';
+import React, { Component } from 'react';
+import { Text, Button, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView } from 'react-native';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-class Example extends React.Component {
+class Example extends Component {
   constructor(props) {
     super(props);
     this.state = {ratingId: '61eac4627b8ad224e37bb3f5'};
@@ -586,7 +572,7 @@ class Example extends React.Component {
 
   render() {
     return (
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <ScrollView>
         <View
           style={{justifyContent: 'center', alignItems: 'center', margin: 20}}>
           <Image
@@ -598,15 +584,12 @@ class Example extends React.Component {
             React Native Demo App
           </Text>
         </View>
-
         <Button onPress = { this.test } title = "Test" color = "#1b1c1d"/>
         <Button onPress = { this.onInit } title = "Init"/>
         <Button onPress = { this.onStart } title = "Start" color = "#5bbd72"/>
         <Button onPress = { this.onStop } title = "Stop" color = "#d95c5c"/>
-
         <Text style={[{textAlign: 'center'}]}>.</Text>
         <Text style={[{textAlign: 'center'}]}>Events Start</Text>
-
         <Button onPress = { this.basicEvent } title = "Basic Events" color = "#e0e0e0"/>
         <Button onPress = { this.eventWithSum } title = "Event with Sum" color = "#e0e0e0"/>
         <Button onPress = { this.eventWithSegment } title = "Event with Segment" color = "#e0e0e0"/>
@@ -615,15 +598,10 @@ class Example extends React.Component {
         <Button onPress = { this.timedEventWithSum } title = "Timed events with Sum" color = "#e0e0e0"/>
         <Button onPress = { this.timedEventWithSegment } title = "Timed events with Segment" color = "#e0e0e0"/>
         <Button onPress = { this.timedEventWithSumAndSegment } title = "Timed events with Sum and Segment" color = "#e0e0e0"/>
-
-
-
         <Text style={[{textAlign: 'center'}]}>Events End</Text>
         <Text style={[{textAlign: 'center'}]}>.</Text>
-
         <Text style={[{textAlign: 'center'}]}>2017</Text>
         <Text style={[{textAlign: 'center'}]}>User Methods Start</Text>
-
         <Button onPress = { this.onSendUserData } title = "Send Users Data" color = "#00b5ad"/>
         <Button onPress = { this.onUpdateUserData } title = "Update Users Data" color = "#00b5ad"/>
         <Button onPress = { this.userData_setProperty } title = "UserData.setProperty" color = "#00b5ad"/>
@@ -636,16 +614,10 @@ class Example extends React.Component {
         <Button onPress = { this.userData_pushUniqueValue } title = "UserData.pushUniqueValue" color = "#00b5ad"/>
         <Button onPress = { this.userData_pushValue } title = "UserData.pushValue" color = "#00b5ad"/>
         <Button onPress = { this.userData_pullValue } title = "UserData.pullValue" color = "#00b5ad"/>
-
-
         <Button onPress = { this.onSetUserProperties } title = "Set Users Properties" color = "#00b5ad"/>
         <Button onPress = { this.onSendUserDataBulk } title = "Send Users Data Bulk" color = "#00b5ad"/>
-
         <Text style={[{textAlign: 'center'}]}>User Methods End</Text>
         <Text style={[{textAlign: 'center'}]}>.</Text>
-        
-
-
         <Text style={[{textAlign: 'center'}]}>Other Methods Start</Text>
         <Button onPress = { function(){Countly.recordView("HomePage")} } title = "Record View: 'HomePage'" color = "#e0e0e0"/>
         <Button onPress = { function(){Countly.recordView("Dashboard")} } title = "Record View: 'Dashboard'" color = "#e0e0e0"/>
@@ -663,19 +635,14 @@ class Example extends React.Component {
         <Button onPress = { this.setCustomMetrics } title = "Set Custom Metrics" color = "#00b5ad"/>
         <Text style={[{textAlign: 'center'}]}>Other Methods End</Text>
         <Text style={[{textAlign: 'center'}]}>.</Text>
-
-
         <Text style={[{ textAlign: 'center' }]}>Push Notification Start</Text>
         <Button onPress={this.askForNotificationPermission} title='askForNotificationPermission' color='#00b5ad' />
         <Button onPress={this.changeDeviceId} title='Change Device ID' color='#00b5ad' />
         <Text style={[{ textAlign: 'center' }]}>Push Notification End</Text>
         <Text style={[{textAlign: 'center'}]}>.</Text>
-
-
         <Text style={[{ textAlign: 'center' }]}>Consent Start</Text>
         <Button onPress = { this.giveAllConsent } title = "Give all Consent" color = "#00b5ad"/>
         <Button onPress = { this.removeAllConsent } title = "Remove all Consent" color = "#00b5ad"/>
-
         {/* Give Consent */}
         <Button onPress = { ()=>{ this.giveConsent("sessions") } } title = "Give sessions" color = "#00b5ad"/>
         <Button onPress = { ()=>{ this.giveConsent("events") } } title = "Give events" color = "#00b5ad"/>
@@ -689,7 +656,6 @@ class Example extends React.Component {
         <Button onPress = { ()=>{ this.giveConsent("apm") } } title = "Give APM" color = "#00b5ad"/>
 
         {/* Remove Consent */}
-
         <Button onPress = { ()=>{ this.removeConsent("sessions") } } title = "Remove sessions" color = "#00b5ad"/>
         <Button onPress = { ()=>{ this.removeConsent("events") } } title = "Remove events" color = "#00b5ad"/>
         <Button onPress = { ()=>{ this.removeConsent("views") } } title = "Remove views" color = "#00b5ad"/>
@@ -700,27 +666,14 @@ class Example extends React.Component {
         <Button onPress = { ()=>{ this.removeConsent("push") } } title = "Remove push" color = "#00b5ad"/>
         <Button onPress = { ()=>{ this.removeConsent("star-rating") } } title = "Remove star-rating" color = "#00b5ad"/>
         <Button onPress = { ()=>{ this.removeConsent("apm") } } title = "Remove APM" color = "#00b5ad"/>
-
-
         <Button onPress = { this.giveMultipleConsent } title = "Give multiple consent" color = "#00b5ad"/>
         <Button onPress = { this.removeMultipleConsent } title = "Remove multiple consent" color = "#00b5ad"/>
-
         <Text style={[{ textAlign: 'center' }]}>Consent End</Text>
         <Text style={[{textAlign: 'center'}]}>.</Text>
-
-
-
-
-
-
-
-
-
         <Text style={[{ textAlign: 'center' }]}>Remote Config Start</Text>
         <Button onPress = { this.remoteConfigUpdate } title = "Update Remote Config" color = "#00b5ad"/>
         <Button onPress = { this.updateRemoteConfigForKeysOnly } title = "Update Remote Config with Keys Only" color = "#00b5ad"/>
         <Button onPress = { this.updateRemoteConfigExceptKeys } title = "Update Remote Config Except Keys" color = "#00b5ad"/>
-
         <Button onPress = { this.getRemoteConfigValueForKeyBoolean } title = "Boolean Test" color = "#00b5ad"/>
         <Button onPress = { this.getRemoteConfigValueForKeyFloat } title = "Float Test" color = "#00b5ad"/>
         <Button onPress = { this.getRemoteConfigValueForKeyInteger } title = "Integer Test" color = "#00b5ad"/>
@@ -729,12 +682,10 @@ class Example extends React.Component {
         <Button onPress = { this.remoteConfigClearValues } title = "Clear remote config cache" color = "#00b5ad"/>
         <Text style={[{ textAlign: 'center' }]}>Remote Config End</Text>
         <Text style={[{textAlign: 'center'}]}>.</Text>
-
         <Text style={[{textAlign: 'center'}]}>Crash Event start</Text>
         <Button onPress = { this.addCrashLog } title = "Add Crash Log" color = "#00b5ad"/>
         <Text style={[{textAlign: 'center'}]}>Crash Event End</Text>
         <Text style={[{textAlign: 'center'}]}>.</Text>
-
         <Text style={[{textAlign: 'center'}]}>APM Example Start</Text>
         <Button onPress={ this.startTrace } title="Start Trace" color = "#1b1c1d"/>
         <Button onPress={ this.endTrace } title="End Trace" color = "#1b1c1d"/>
@@ -742,7 +693,6 @@ class Example extends React.Component {
         <Button onPress={ this.recordNetworkTraceFailure } title="End Network Request Failure" color = "#1b1c1d"/>
         <Text style={[{textAlign: 'center'}]}>APM Example Start</Text>
         <Text style={[{textAlign: 'center'}]}>.</Text>
-
         {/*
           <Button onPress = { this.testCrash } title = "Test Native Crash" color = "crimson"/>
           */}
@@ -754,7 +704,7 @@ class Example extends React.Component {
 function App(): JSX.Element {
   return (
     <SafeAreaView>
-        <Example />
+      <Example />
     </SafeAreaView>
   );
 }
