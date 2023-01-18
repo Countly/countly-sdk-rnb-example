@@ -36,8 +36,7 @@ class Example extends Component {
     this.userData_saveMin = this.userData_saveMin.bind(this);
     this.userData_setOnce = this.userData_setOnce.bind(this);
     this.changeDeviceId = this.changeDeviceId.bind(this);
-    this.askForNotificationPermission =
-      this.askForNotificationPermission.bind(this);
+    this.askForNotificationPermission = this.askForNotificationPermission.bind(this);
 
     this.startTrace = this.startTrace.bind(this);
     this.endTrace = this.endTrace.bind(this);
@@ -45,8 +44,7 @@ class Example extends Component {
     this.recordNetworkTraceFailure = this.recordNetworkTraceFailure.bind(this);
     this.random = this.random.bind(this);
     this.setCustomCrashSegments = this.setCustomCrashSegments.bind(this);
-    this.presentRatingWidgetUsingEditBox =
-      this.presentRatingWidgetUsingEditBox.bind(this);
+    this.presentRatingWidgetUsingEditBox = this.presentRatingWidgetUsingEditBox.bind(this);
   }
 
   componentDidMount = () => {
