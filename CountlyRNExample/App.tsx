@@ -5,60 +5,59 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  Button,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Image,
-  TextInput,
-} from 'react-native';
+import React, { Component } from 'react';
+import { Text, Button, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView } from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+class Example extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {ratingId: '61eac4627b8ad224e37bb3f5'};
+    this.config = {};
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+    this.onInit = this.onInit.bind(this);
+    this.onStart = this.onStart.bind(this);
+    this.basicEvent = this.basicEvent.bind(this);
+    this.eventWithSum = this.eventWithSum.bind(this);
+    this.eventWithSegment = this.eventWithSegment.bind(this);
+    this.eventWithSumAndSegment = this.eventWithSumAndSegment.bind(this);
+    this.startEvent = this.startEvent.bind(this);
+    this.test = this.test.bind(this);
+    this.onSendUserData = this.onSendUserData.bind(this);
+    this.onSendUserDataBulk = this.onSendUserDataBulk.bind(this);
+    this.onSetUserProperties = this.onSetUserProperties.bind(this);
+    this.onUpdateUserData = this.onUpdateUserData.bind(this);
+    this.userData_setProperty = this.userData_setProperty.bind(this);
+    this.userData_increment = this.userData_increment.bind(this);
+    this.userData_multiply = this.userData_multiply.bind(this);
+    this.userData_saveMax = this.userData_saveMax.bind(this);
+    this.userData_saveMin = this.userData_saveMin.bind(this);
+    this.userData_setOnce = this.userData_setOnce.bind(this);
+    this.changeDeviceId = this.changeDeviceId.bind(this);
+    this.askForNotificationPermission =
+      this.askForNotificationPermission.bind(this);
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+    this.startTrace = this.startTrace.bind(this);
+    this.endTrace = this.endTrace.bind(this);
+    this.recordNetworkTraceSuccess = this.recordNetworkTraceSuccess.bind(this);
+    this.recordNetworkTraceFailure = this.recordNetworkTraceFailure.bind(this);
+    this.random = this.random.bind(this);
+    this.setCustomCrashSegments = this.setCustomCrashSegments.bind(this);
+    this.presentRatingWidgetUsingEditBox =
+      this.presentRatingWidgetUsingEditBox.bind(this);
+  }
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  componentDidMount = () => {
+    console.log('component did mount');
+    // this.onInit();
   };
-  var successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
-  var failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate');
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
 
   onInit = async () => {
     // if(!await Countly.isInitialized()) {
@@ -68,23 +67,19 @@ function App(): JSX.Element {
     //   Countly.setRequiresConsent(true); // Set that consent should be required for features to work.
     //   Countly.giveConsentInit(["location", "sessions", "attribution", "push", "events", "views", "crashes", "users", "push", "star-rating", "apm", "feedback", "remote-config"]); // give conset for specific features before init.
     //   Countly.setLocationInit("TR", "Istanbul", "41.0082,28.9784", "10.2.33.12"); // Set user initial location.
-
     //   /** Optional settings for Countly initialisation */
     //   Countly.enableParameterTamperingProtection("salt"); // Set the optional salt to be used for calculating the checksum of requested data which will be sent with each request
     //   // Countly.pinnedCertificates("count.ly.cer"); // It will ensure that connection is made with one of the public keys specified
     //   // Countly.setHttpPostForced(false); // Set to "true" if you want HTTP POST to be used for all requests
     //   Countly.enableApm(); // Enable APM features, which includes the recording of app start time.
     //   Countly.pushTokenType(Countly.messagingMode.DEVELOPMENT, "ChannelName", "ChannelDescription"); // Set messaging mode for push notifications
-
     //   if (Platform.OS.match("ios")) {
     //     Countly.recordAttributionID("ADVERTISING_ID");
     //   }
     //   else {
     //     Countly.enableAttribution(); // Enable to measure your marketing campaign performance by attributing installs from specific campaigns.
     //   }
-
     //   Countly.configureIntentRedirectionCheck(["MainActivity"], ["com.countly.demo"]);
-      
     //   Countly.setStarRatingDialogTexts("Title", "Message", "Dismiss");
     //   await Countly.init("https://try.count.ly", "YOUR_APP_KEY"); // Initialize the countly SDK.
     //   Countly.appLoadingFinished();
@@ -98,7 +93,6 @@ function App(): JSX.Element {
     //     alert('theNotification: ' + jsonString);
     //   }); // Set callback to receive push notifications
     //   Countly.askForNotificationPermission("android.resource://com.countly.demo/raw/notif_sample"); // This method will ask for permission, enables push notification and send push token to countly server.
-
     // }
   };
 
@@ -136,13 +130,10 @@ function App(): JSX.Element {
     // options.picturePath = "";
     // options.gender = "Male";
     // options.byear = 1989;
-
     // // Custom User Properties
     // options.customeValueA = "Custom value A";
     // options.customeValueB = "Custom value B";
-
     // Countly.userDataBulk.setUserProperties(options);
-
     // Countly.userDataBulk.save();
   };
 
@@ -166,7 +157,6 @@ function App(): JSX.Element {
     //     // We need to call the "save" in then block else it will cause a race condition and "save" may call before all the user profiles calls are completed
     //     Countly.userDataBulk.save();
     // })
-
   };
 
   onUpdateUserData = () => {
@@ -391,7 +381,6 @@ function App(): JSX.Element {
     // var latitude = "29.634933";
     // var longitude = "-95.220255";
     // var ipAddress = "103.238.105.167";
-
     // Countly.setLocation(countryCode, city, latitude + "," + longitude, ipAddress);
   };
   disableLocation = () => {
@@ -422,7 +411,7 @@ function App(): JSX.Element {
     // });
   };
 
-  presentRatingWidgetUsingEditBox = function() {
+  presentRatingWidgetUsingEditBox = function () {
     // Countly.presentRatingWidgetWithID(this.state.ratingId, "Submit", (error) => {
     //   if (error != null) {
     //     console.log("presentRatingWidgetUsingEditBox : " + error);
@@ -511,7 +500,7 @@ function App(): JSX.Element {
     // Countly.endTrace(traceKey, customMetric);
   };
   random = (number) => {
-    // return Math.floor(Math.random() * number);
+    return Math.floor(Math.random() * number);
   };
   recordNetworkTraceSuccess = () => {
     // var networkTraceKey = "api/endpoint.1";
@@ -551,14 +540,11 @@ function App(): JSX.Element {
   test = () => {
     // this.onInit();
     // this.onStart();
-
     // this.basicEvent();
     // this.eventWithSum();
     // this.eventWithSegment();
     // this.eventWithSumAndSegment();
-
     // this.startEvent();
-
     // this.onSendUserData();
     // this.onSendUserDataBulk();
     // this.onSetUserProperties();
@@ -570,7 +556,6 @@ function App(): JSX.Element {
     // this.userData_saveMax();
     // this.userData_saveMin();
     // this.userData_setOnce();
-
     // // Note: Crash test for setLocation method.
     // // Countly.setLocation(null, city, latitude + "," + longitude, ipAddress);
     // // Countly.setLocation(null, null, latitude + "," + longitude, ipAddress);
@@ -585,164 +570,148 @@ function App(): JSX.Element {
     // // Countly.setLocation(countryCode, city, "abcd", ipAddress);
   };
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{justifyContent: 'center', alignItems: 'center', margin: 20}}>
-          <Image
-            source={{uri: 'https://count.ly/images/logos/countly-logo.png'}}
-            style={{width: 144, height: 42}}
-            onError={e => console.log(e.nativeEvent.error)}
-          />
-          <Text style={[{fontSize: 24, textAlign: 'center'}]}>
-            React Native Demo App
-          </Text>
-        </View>
-        < Button onPress = { this.test } title = "Test" color = "#1b1c1d"> </Button>
-            < Button onPress = { this.onInit } title = "Init"> </Button>
-            < Button onPress = { this.onStart } title = "Start" color = "#5bbd72"> </Button>
-            < Button onPress = { this.onStop } title = "Stop" color = "#d95c5c"> </Button>
-
-            <Text style={[{textAlign: 'center'}]}>.</Text>
-            <Text style={[{textAlign: 'center'}]}>Events Start</Text>
-
-            < Button onPress = { this.basicEvent } title = "Basic Events" color = "#e0e0e0"> </Button>
-            < Button onPress = { this.eventWithSum } title = "Event with Sum" color = "#e0e0e0"> </Button>
-            < Button onPress = { this.eventWithSegment } title = "Event with Segment" color = "#e0e0e0"> </Button>
-            < Button onPress = { this.eventWithSumAndSegment } title = "Even with Sum and Segment" color = "#841584"> </Button>
-            < Button onPress = { this.startEvent } title = "Timed event" color = "#e0e0e0"> </Button>
-            < Button onPress = { this.timedEventWithSum } title = "Timed events with Sum" color = "#e0e0e0"> </Button>
-            < Button onPress = { this.timedEventWithSegment } title = "Timed events with Segment" color = "#e0e0e0"> </Button>
-            < Button onPress = { this.timedEventWithSumAndSegment } title = "Timed events with Sum and Segment" color = "#e0e0e0"> </Button>
-            <Text style={[{textAlign: 'center'}]}>Events End</Text>
-            <Text style={[{textAlign: 'center'}]}>.</Text>
-            <Text style={[{textAlign: 'center'}]}>2017</Text>
-            <Text style={[{textAlign: 'center'}]}>User Methods Start</Text>
-            < Button onPress = { this.onSendUserData } title = "Send Users Data" color = "#00b5ad"> </Button>
-            < Button onPress = { this.onUpdateUserData } title = "Update Users Data" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_setProperty } title = "UserData.setProperty" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_increment } title = "UserData.increment" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_incrementBy } title = "UserData.incrementBy" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_multiply } title = "UserData.multiply" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_saveMax } title = "UserData.saveMax" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_saveMin } title = "UserData.saveMin" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_setOnce } title = "UserData.setOnce" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_pushUniqueValue } title = "UserData.pushUniqueValue" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_pushValue } title = "UserData.pushValue" color = "#00b5ad"> </Button>
-            < Button onPress = { this.userData_pullValue } title = "UserData.pullValue" color = "#00b5ad"> </Button>
-            < Button onPress = { this.onSetUserProperties } title = "Set Users Properties" color = "#00b5ad"> </Button>
-            < Button onPress = { this.onSendUserDataBulk } title = "Send Users Data Bulk" color = "#00b5ad"> </Button>
-            <Text style={[{textAlign: 'center'}]}>User Methods End</Text>
-            <Text style={[{textAlign: 'center'}]}>.</Text>
-            <Text style={[{textAlign: 'center'}]}>Other Methods Start</Text>
-            < Button onPress = { () => {Countly.recordView("HomePage")} } title = "Record View: 'HomePage'" color = "#e0e0e0"> </Button>
-            < Button onPress = { () => {Countly.recordView("Dashboard")} } title = "Record View: 'Dashboard'" color = "#e0e0e0"> </Button>
-            < Button onPress = { () => {Countly.recordView("HomePage", {"version": "1.0", "_facebook_version": "0.0.1"})} } title = "Record View: 'HomePage' with Segment" color = "#e0e0e0"> </Button>
-            < Button onPress = { this.setLocation } title = "Set Location" color = "#00b5ad"> </Button>
-            < Button onPress = { this.disableLocation } title = "Disable Location" color = "#00b5ad"> </Button>
-            < Button onPress = { this.showStarRating } title = "Show Star Rating Model" color = "#00b5ad"> </Button>
-            < Button onPress = { this.presentRatingWidget } title = "Show FeedBack Model" color = "#00b5ad"> </Button>
-            <TextInput style={styles.inputRoundedBorder} placeholder="Enter a Rating ID" 
-            onChangeText={(ratingId) => this.setState({ ratingId })} 
-            onSubmitEditing={(ratingId) => this.setState({ ratingId })}
-            // value={this.state.ratingId} 
+  render() {
+    return (
+      <SafeAreaView>
+        <ScrollView>
+          <View style={{justifyContent: 'center', alignItems: 'center', margin: 20}}>
+            <Image
+              source={{uri: 'https://count.ly/images/logos/countly-logo.png'}}
+              style={{width: 144, height: 42}}
+              onError={e => console.log(e.nativeEvent.error)}
             />
-            < Button 
-            // disabled={!this.state.ratingId} 
-            onPress = { this.presentRatingWidgetUsingEditBox } title = "Show Feedback using EditBox" color = "#00b5ad"> </Button>  
-            < Button onPress = { this.showSurvey } title = "Show Survey" color = "#00b5ad"> </Button>
-            < Button onPress = { this.showNPS } title = "Show NPS" color = "#00b5ad"> </Button>
-            < Button onPress = { this.eventSendThreshold } title = "Set Event Threshold" color = "#00b5ad"> </Button>
-            < Button onPress = { this.setCustomCrashSegments } title = "Set Custom Crash Segment" color = "#00b5ad"> </Button>
-            < Button onPress = { this.setCustomMetrics } title = "Set Custom Metrics" color = "#00b5ad"> </Button>
-            <Text style={[{textAlign: 'center'}]}>Other Methods End</Text>
-            <Text style={[{textAlign: 'center'}]}>.</Text>
-            < Text style={[{ textAlign: 'center' }]}>Push Notification Start</Text>
-            < Button onPress={this.askForNotificationPermission} title='askForNotificationPermission' color='#00b5ad' />
-            < Button onPress={this.changeDeviceId} title='Change Device ID' color='#00b5ad' />
-            < Text style={[{ textAlign: 'center' }]}>Push Notification End</Text>
-            <Text style={[{textAlign: 'center'}]}>.</Text>
-            < Text style={[{ textAlign: 'center' }]}>Consent Start</Text>
-            < Button onPress = { this.giveAllConsent } title = "Give all Consent" color = "#00b5ad"> </Button>
-            < Button onPress = { this.removeAllConsent } title = "Remove all Consent" color = "#00b5ad"> </Button>
-            {/* Give Consent */}
-            < Button onPress = { ()=>{ this.giveConsent("sessions") } } title = "Give sessions" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.giveConsent("events") } } title = "Give events" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.giveConsent("views") } } title = "Give views" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.giveConsent("location") } } title = "Give location" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.giveConsent("crashes") } } title = "Give crashes" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.giveConsent("attribution") } } title = "Give attribution" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.giveConsent("users") } } title = "Give users" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.giveConsent("push") } } title = "Give push" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.giveConsent("star-rating") } } title = "Give star-rating" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.giveConsent("apm") } } title = "Give APM" color = "#00b5ad"> </Button>
-            {/* Remove Consent */}
-            < Button onPress = { ()=>{ this.removeConsent("sessions") } } title = "Remove sessions" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.removeConsent("events") } } title = "Remove events" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.removeConsent("views") } } title = "Remove views" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.removeConsent("location") } } title = "Remove location" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.removeConsent("crashes") } } title = "Remove crashes" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.removeConsent("attribution") } } title = "Remove attribution" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.removeConsent("users") } } title = "Remove users" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.removeConsent("push") } } title = "Remove push" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.removeConsent("star-rating") } } title = "Remove star-rating" color = "#00b5ad"> </Button>
-            < Button onPress = { ()=>{ this.removeConsent("apm") } } title = "Remove APM" color = "#00b5ad"> </Button>
-            < Button onPress = { this.giveMultipleConsent } title = "Give multiple consent" color = "#00b5ad"> </Button>
-            < Button onPress = { this.removeMultipleConsent } title = "Remove multiple consent" color = "#00b5ad"> </Button>
-            < Text style={[{ textAlign: 'center' }]}>Consent End</Text>
-            <Text style={[{textAlign: 'center'}]}>.</Text>
-            < Text style={[{ textAlign: 'center' }]}>Remote Config Start</Text>
-            < Button onPress = { this.remoteConfigUpdate } title = "Update Remote Config" color = "#00b5ad"> </Button>
-            < Button onPress = { this.updateRemoteConfigForKeysOnly } title = "Update Remote Config with Keys Only" color = "#00b5ad"> </Button>
-            < Button onPress = { this.updateRemoteConfigExceptKeys } title = "Update Remote Config Except Keys" color = "#00b5ad"> </Button>
-            < Button onPress = { this.getRemoteConfigValueForKeyBoolean } title = "Boolean Test" color = "#00b5ad"> </Button>
-            < Button onPress = { this.getRemoteConfigValueForKeyFloat } title = "Float Test" color = "#00b5ad"> </Button>
-            < Button onPress = { this.getRemoteConfigValueForKeyInteger } title = "Integer Test" color = "#00b5ad"> </Button>
-            < Button onPress = { this.getRemoteConfigValueForKeyString } title = "String Test" color = "#00b5ad"> </Button>
-            < Button onPress = { this.getRemoteConfigValueForKeyJSON } title = "JSON Test" color = "#00b5ad"> </Button>
-            < Button onPress = { this.remoteConfigClearValues } title = "Clear remote config cache" color = "#00b5ad"> </Button>
-            < Text style={[{ textAlign: 'center' }]}>Remote Config End</Text>
-            <Text style={[{textAlign: 'center'}]}>.</Text>
-            <Text style={[{textAlign: 'center'}]}>Crash Event start</Text>
-            < Button onPress = { this.addCrashLog } title = "Add Crash Log" color = "#00b5ad"> </Button>
-            <Text style={[{textAlign: 'center'}]}>Crash Event End</Text>
-            <Text style={[{textAlign: 'center'}]}>.</Text>
+            <Text style={[{fontSize: 24, textAlign: 'center'}]}>
+              React Native Demo App
+            </Text>
+          </View>
+          <Button onPress = { this.test } title = "Test" color = "#1b1c1d"/>
+          <Button onPress = { this.onInit } title = "Init"/>
+          <Button onPress = { this.onStart } title = "Start" color = "#5bbd72"/>
+          <Button onPress = { this.onStop } title = "Stop" color = "#d95c5c"/>
+          <Text style={[{textAlign: 'center'}]}>.</Text>
+          <Text style={[{textAlign: 'center'}]}>Events Start</Text>
+          <Button onPress = { this.basicEvent } title = "Basic Events" color = "#e0e0e0"/>
+          <Button onPress = { this.eventWithSum } title = "Event with Sum" color = "#e0e0e0"/>
+          <Button onPress = { this.eventWithSegment } title = "Event with Segment" color = "#e0e0e0"/>
+          <Button onPress = { this.eventWithSumAndSegment } title = "Even with Sum and Segment" color = "#841584"/>
+          <Button onPress = { this.startEvent } title = "Timed event" color = "#e0e0e0"/>
+          <Button onPress = { this.timedEventWithSum } title = "Timed events with Sum" color = "#e0e0e0"/>
+          <Button onPress = { this.timedEventWithSegment } title = "Timed events with Segment" color = "#e0e0e0"/>
+          <Button onPress = { this.timedEventWithSumAndSegment } title = "Timed events with Sum and Segment" color = "#e0e0e0"/>
+          <Text style={[{textAlign: 'center'}]}>Events End</Text>
+          <Text style={[{textAlign: 'center'}]}>.</Text>
+          <Text style={[{textAlign: 'center'}]}>2017</Text>
+          <Text style={[{textAlign: 'center'}]}>User Methods Start</Text>
+          <Button onPress = { this.onSendUserData } title = "Send Users Data" color = "#00b5ad"/>
+          <Button onPress = { this.onUpdateUserData } title = "Update Users Data" color = "#00b5ad"/>
+          <Button onPress = { this.userData_setProperty } title = "UserData.setProperty" color = "#00b5ad"/>
+          <Button onPress = { this.userData_increment } title = "UserData.increment" color = "#00b5ad"/>
+          <Button onPress = { this.userData_incrementBy } title = "UserData.incrementBy" color = "#00b5ad"/>
+          <Button onPress = { this.userData_multiply } title = "UserData.multiply" color = "#00b5ad"/>
+          <Button onPress = { this.userData_saveMax } title = "UserData.saveMax" color = "#00b5ad"/>
+          <Button onPress = { this.userData_saveMin } title = "UserData.saveMin" color = "#00b5ad"/>
+          <Button onPress = { this.userData_setOnce } title = "UserData.setOnce" color = "#00b5ad"/>
+          <Button onPress = { this.userData_pushUniqueValue } title = "UserData.pushUniqueValue" color = "#00b5ad"/>
+          <Button onPress = { this.userData_pushValue } title = "UserData.pushValue" color = "#00b5ad"/>
+          <Button onPress = { this.userData_pullValue } title = "UserData.pullValue" color = "#00b5ad"/>
+          <Button onPress = { this.onSetUserProperties } title = "Set Users Properties" color = "#00b5ad"/>
+          <Button onPress = { this.onSendUserDataBulk } title = "Send Users Data Bulk" color = "#00b5ad"/>
+          <Text style={[{textAlign: 'center'}]}>User Methods End</Text>
+          <Text style={[{textAlign: 'center'}]}>.</Text>
+          <Text style={[{textAlign: 'center'}]}>Other Methods Start</Text>
+          <Button onPress = { function(){Countly.recordView("HomePage")} } title = "Record View: 'HomePage'" color = "#e0e0e0"/>
+          <Button onPress = { function(){Countly.recordView("Dashboard")} } title = "Record View: 'Dashboard'" color = "#e0e0e0"/>
+          <Button onPress = { function(){Countly.recordView("HomePage", {"version": "1.0", "_facebook_version": "0.0.1"})} } title = "Record View: 'HomePage' with Segment" color = "#e0e0e0"/>
+          <Button onPress = { this.setLocation } title = "Set Location" color = "#00b5ad"/>
+          <Button onPress = { this.disableLocation } title = "Disable Location" color = "#00b5ad"/>
+          <Button onPress = { this.showStarRating } title = "Show Star Rating Model" color = "#00b5ad"/>
+          <Button onPress = { this.presentRatingWidget } title = "Show FeedBack Model" color = "#00b5ad"/>
+          <TextInput style={styles.inputRoundedBorder} placeholder="Enter a Rating ID" onChangeText={(ratingId) => this.setState({ ratingId })} onSubmitEditing={(ratingId) => this.setState({ ratingId })} value={this.state.ratingId} />
+          <Button disabled={!this.state.ratingId} onPress = { this.presentRatingWidgetUsingEditBox } title = "Show Feedback using EditBox" color = "#00b5ad"/>  
+          <Button onPress = { this.showSurvey } title = "Show Survey" color = "#00b5ad"/>
+          <Button onPress = { this.showNPS } title = "Show NPS" color = "#00b5ad"/>
+          <Button onPress = { this.eventSendThreshold } title = "Set Event Threshold" color = "#00b5ad"/>
+          <Button onPress = { this.setCustomCrashSegments } title = "Set Custom Crash Segment" color = "#00b5ad"/>
+          <Button onPress = { this.setCustomMetrics } title = "Set Custom Metrics" color = "#00b5ad"/>
+          <Text style={[{textAlign: 'center'}]}>Other Methods End</Text>
+          <Text style={[{textAlign: 'center'}]}>.</Text>
+          <Text style={[{ textAlign: 'center' }]}>Push Notification Start</Text>
+          <Button onPress={this.askForNotificationPermission} title='askForNotificationPermission' color='#00b5ad' />
+          <Button onPress={this.changeDeviceId} title='Change Device ID' color='#00b5ad' />
+          <Text style={[{ textAlign: 'center' }]}>Push Notification End</Text>
+          <Text style={[{textAlign: 'center'}]}>.</Text>
+          <Text style={[{ textAlign: 'center' }]}>Consent Start</Text>
+          <Button onPress = { this.giveAllConsent } title = "Give all Consent" color = "#00b5ad"/>
+          <Button onPress = { this.removeAllConsent } title = "Remove all Consent" color = "#00b5ad"/>
+          {/* Give Consent */}
+          <Button onPress = { ()=>{ this.giveConsent("sessions") } } title = "Give sessions" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.giveConsent("events") } } title = "Give events" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.giveConsent("views") } } title = "Give views" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.giveConsent("location") } } title = "Give location" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.giveConsent("crashes") } } title = "Give crashes" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.giveConsent("attribution") } } title = "Give attribution" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.giveConsent("users") } } title = "Give users" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.giveConsent("push") } } title = "Give push" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.giveConsent("star-rating") } } title = "Give star-rating" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.giveConsent("apm") } } title = "Give APM" color = "#00b5ad"/>
 
-            <Text style={[{textAlign: 'center'}]}>APM Example Start</Text>
-            <Button onPress={ this.startTrace } title="Start Trace" color = "#1b1c1d"> </Button>
-            <Button onPress={ this.endTrace } title="End Trace" color = "#1b1c1d"> </Button>
-            <Button onPress={ this.recordNetworkTraceSuccess } title="End Network Request Success" color = "#1b1c1d"> </Button>
-            <Button onPress={ this.recordNetworkTraceFailure } title="End Network Request Failure" color = "#1b1c1d"> </Button>
-            <Text style={[{textAlign: 'center'}]}>APM Example Start</Text>
-            <Text style={[{textAlign: 'center'}]}>.</Text>
-            {/*
-            < Button onPress = { this.testCrash } title = "Test Native Crash" color = "crimson"> </Button>
+          {/* Remove Consent */}
+          <Button onPress = { ()=>{ this.removeConsent("sessions") } } title = "Remove sessions" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.removeConsent("events") } } title = "Remove events" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.removeConsent("views") } } title = "Remove views" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.removeConsent("location") } } title = "Remove location" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.removeConsent("crashes") } } title = "Remove crashes" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.removeConsent("attribution") } } title = "Remove attribution" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.removeConsent("users") } } title = "Remove users" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.removeConsent("push") } } title = "Remove push" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.removeConsent("star-rating") } } title = "Remove star-rating" color = "#00b5ad"/>
+          <Button onPress = { ()=>{ this.removeConsent("apm") } } title = "Remove APM" color = "#00b5ad"/>
+          <Button onPress = { this.giveMultipleConsent } title = "Give multiple consent" color = "#00b5ad"/>
+          <Button onPress = { this.removeMultipleConsent } title = "Remove multiple consent" color = "#00b5ad"/>
+          <Text style={[{ textAlign: 'center' }]}>Consent End</Text>
+          <Text style={[{textAlign: 'center'}]}>.</Text>
+          <Text style={[{ textAlign: 'center' }]}>Remote Config Start</Text>
+          <Button onPress = { this.remoteConfigUpdate } title = "Update Remote Config" color = "#00b5ad"/>
+          <Button onPress = { this.updateRemoteConfigForKeysOnly } title = "Update Remote Config with Keys Only" color = "#00b5ad"/>
+          <Button onPress = { this.updateRemoteConfigExceptKeys } title = "Update Remote Config Except Keys" color = "#00b5ad"/>
+          <Button onPress = { this.getRemoteConfigValueForKeyBoolean } title = "Boolean Test" color = "#00b5ad"/>
+          <Button onPress = { this.getRemoteConfigValueForKeyFloat } title = "Float Test" color = "#00b5ad"/>
+          <Button onPress = { this.getRemoteConfigValueForKeyInteger } title = "Integer Test" color = "#00b5ad"/>
+          <Button onPress = { this.getRemoteConfigValueForKeyString } title = "String Test" color = "#00b5ad"/>
+          <Button onPress = { this.getRemoteConfigValueForKeyJSON } title = "JSON Test" color = "#00b5ad"/>
+          <Button onPress = { this.remoteConfigClearValues } title = "Clear remote config cache" color = "#00b5ad"/>
+          <Text style={[{ textAlign: 'center' }]}>Remote Config End</Text>
+          <Text style={[{textAlign: 'center'}]}>.</Text>
+          <Text style={[{textAlign: 'center'}]}>Crash Event start</Text>
+          <Button onPress = { this.addCrashLog } title = "Add Crash Log" color = "#00b5ad"/>
+          <Text style={[{textAlign: 'center'}]}>Crash Event End</Text>
+          <Text style={[{textAlign: 'center'}]}>.</Text>
+          <Text style={[{textAlign: 'center'}]}>APM Example Start</Text>
+          <Button onPress={ this.startTrace } title="Start Trace" color = "#1b1c1d"/>
+          <Button onPress={ this.endTrace } title="End Trace" color = "#1b1c1d"/>
+          <Button onPress={ this.recordNetworkTraceSuccess } title="End Network Request Success" color = "#1b1c1d"/>
+          <Button onPress={ this.recordNetworkTraceFailure } title="End Network Request Failure" color = "#1b1c1d"/>
+          <Text style={[{textAlign: 'center'}]}>APM Example Start</Text>
+          <Text style={[{textAlign: 'center'}]}>.</Text>
+          {/*
+            <Button onPress = { this.testCrash } title = "Test Native Crash" color = "crimson"/>
             */}
-      </ScrollView>
-    </SafeAreaView>
-  );
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  inputRoundedBorder: {
+    margin: 5,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'grey',
+    padding: 10,
+    fontSize: 20,
   },
 });
 
-export default App;
+export default Example;
