@@ -8,6 +8,9 @@
 import React, { Component } from 'react';
 import { Text, Button, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView } from 'react-native';
 
+var successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
+var failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
+
 class Example extends Component {
   constructor(props) {
     super(props);
