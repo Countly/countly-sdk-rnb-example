@@ -18,14 +18,15 @@ const customStyleOverrides = StyleSheet.create({
 
 interface CountlyButtonProps {
     color: string;
-    onPress: (event: GestureResponderEvent) => void;
+    disabled?: boolean;
     lightText?: boolean;
+    onPress: (event: GestureResponderEvent) => void;
     title: string;
 }
 
 const CountlyButton = (props: CountlyButtonProps) => {
     return (
-        <TouchableOpacity style={{ ...customStyleOverrides.button, backgroundColor: props.color }} onPress={props.onPress}>
+        <TouchableOpacity disabled={props.disabled} style={{ ...customStyleOverrides.button, backgroundColor: props.color }} onPress={props.onPress}>
             <Text style={{ ...customStyleOverrides.text, color: props.lightText ? '#FFFFFF' : '#000000' }} numberOfLines={1} adjustsFontSizeToFit={true}>
                 {props.title}
             </Text>

@@ -305,11 +305,11 @@ class Example extends Component {
         // Countly.changeDeviceId('02d56d66-6a39-482d-aff0-d14e4d5e5fda');
     };
 
-    giveConsent = (name) => {
+    giveConsent = (name: string) => {
         // Countly.giveConsent([name]);
     };
 
-    removeConsent = (name) => {
+    removeConsent = (name: string) => {
         // Countly.removeConsent([name]);
     };
 
@@ -501,7 +501,7 @@ class Example extends Component {
         // };
         // Countly.endTrace(traceKey, customMetric);
     };
-    random = (number) => {
+    random = (number: number) => {
         return Math.floor(Math.random() * number);
     };
     recordNetworkTraceSuccess = () => {
