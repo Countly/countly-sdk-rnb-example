@@ -6,7 +6,8 @@
  */
 
 import React, { Component } from 'react';
-import { Text, Button, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView } from 'react-native';
+import { Text, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView } from 'react-native';
+import Button from './button';
 
 const successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
 const failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
@@ -539,6 +540,7 @@ class Example extends Component {
     };
 
     test = () => {
+      console.log('james is');
         // this.onInit();
         // this.onStart();
         // this.basicEvent();
@@ -579,7 +581,7 @@ class Example extends Component {
                         <Image source={{ uri: 'https://count.ly/images/logos/countly-logo.png' }} style={{ width: 144, height: 42 }} onError={(e) => console.log(e.nativeEvent.error)} />
                         <Text style={[{ fontSize: 24, textAlign: 'center' }]}>React Native Demo App</Text>
                     </View>
-                    <Button onPress={this.test} title="Test" color="#1b1c1d" />
+                    <Button onPress={this.test} title="Test" color="#1b1c1d" lightText={true}/>
                     <Button onPress={this.onInit} title="Init" />
                     <Button onPress={this.onStart} title="Start" color="#5bbd72" />
                     <Button onPress={this.onStop} title="Stop" color="#d95c5c" />
@@ -820,10 +822,10 @@ class Example extends Component {
                     <Text style={[{ textAlign: 'center' }]}>Crash Event End</Text>
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
                     <Text style={[{ textAlign: 'center' }]}>APM Example Start</Text>
-                    <Button onPress={this.startTrace} title="Start Trace" color="#1b1c1d" />
-                    <Button onPress={this.endTrace} title="End Trace" color="#1b1c1d" />
-                    <Button onPress={this.recordNetworkTraceSuccess} title="End Network Request Success" color="#1b1c1d" />
-                    <Button onPress={this.recordNetworkTraceFailure} title="End Network Request Failure" color="#1b1c1d" />
+                    <Button onPress={this.startTrace} title="Start Trace" color="#1b1c1d" lightText={true} />
+                    <Button onPress={this.endTrace} title="End Trace" color="#1b1c1d" lightText={true} />
+                    <Button onPress={this.recordNetworkTraceSuccess} title="End Network Request Success" color="#1b1c1d" lightText={true} />
+                    <Button onPress={this.recordNetworkTraceFailure} title="End Network Request Failure" color="#1b1c1d" lightText={true} />
                     <Text style={[{ textAlign: 'center' }]}>APM Example Start</Text>
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
                     {/*
