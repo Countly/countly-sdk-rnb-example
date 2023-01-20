@@ -540,7 +540,6 @@ class Example extends Component {
     };
 
     test = () => {
-      console.log('james is');
         // this.onInit();
         // this.onStart();
         // this.basicEvent();
