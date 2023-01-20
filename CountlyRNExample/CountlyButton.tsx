@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 
 const customStyleOverrides = StyleSheet.create({
     button: {
@@ -16,7 +16,14 @@ const customStyleOverrides = StyleSheet.create({
     },
 });
 
-const CountlyButton = props => {
+interface CountlyButtonProps {
+    color: string;
+    onPress: (event: GestureResponderEvent) => void;
+    lightText?: boolean;
+    title: string;
+}
+
+const CountlyButton = (props: CountlyButtonProps) => {
     return (
         <TouchableOpacity style={{ ...customStyleOverrides.button, backgroundColor: props.color }} onPress={props.onPress}>
             <Text style={{ ...customStyleOverrides.text, color: props.lightText ? '#FFFFFF' : '#000000' }} numberOfLines={1} adjustsFontSizeToFit={true}>
@@ -24,6 +31,6 @@ const CountlyButton = props => {
             </Text>
         </TouchableOpacity>
     );
-}
+};
 
 export default CountlyButton;

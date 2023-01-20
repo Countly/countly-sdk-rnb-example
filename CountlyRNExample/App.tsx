@@ -581,7 +581,7 @@ class Example extends Component {
                         <Text style={[{ fontSize: 24, textAlign: 'center' }]}>React Native Demo App</Text>
                     </View>
                     <CountlyButton onPress={this.test} title="Test" color="#1b1c1d" lightText={true}/>
-                    <CountlyButton onPress={this.onInit} title="Init" />
+                    <CountlyButton onPress={this.onInit} title="Init" color="#ffffff"/>
                     <CountlyButton onPress={this.onStart} title="Start" color="#5bbd72" />
                     <CountlyButton onPress={this.onStop} title="Stop" color="#d95c5c" />
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
