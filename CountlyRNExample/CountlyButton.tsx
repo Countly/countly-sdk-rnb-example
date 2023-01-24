@@ -24,7 +24,7 @@ interface CountlyButtonProps {
     title: string;
 }
 
-const CountlyButton = (props: CountlyButtonProps) => {
+const CountlyButton = (props: CountlyButtonProps) : JSX.Element => {
     return (
         <TouchableOpacity disabled={props.disabled} style={{ ...customStyleOverrides.button, backgroundColor: props.color }} onPress={props.onPress}>
             <Text style={{ ...customStyleOverrides.text, color: props.lightText ? '#FFFFFF' : '#000000' }} numberOfLines={1} adjustsFontSizeToFit={true}>
