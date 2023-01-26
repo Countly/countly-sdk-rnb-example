@@ -1,8 +1,8 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5632f066ad7646a7beec7f3b50000ee1)](https://www.codacy.com/gh/Countly/countly-sdk-cordova-example/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Countly/countly-sdk-cordova-example&amp;utm_campaign=Badge_Grade)
 
-## Countly React Native
+## Countly React Native Bridge SDK test application
 
-This repository includes example projects of React Native and Ionic to demonstrate how to use [Countly React Native SDK](https://github.com/Countly/countly-sdk-react-native-bridge).
+This repository includes example projects of React Native to demonstrate how to use [Countly React Native Bridge SDK](https://github.com/Countly/countly-sdk-react-native-bridge).
 
 ## What is Countly?
 [Countly](https://count.ly) is a product analytics solution and innovation enabler that helps teams track product performance and customer journey and behavior across [mobile](https://count.ly/mobile-analytics), [web](http://count.ly/web-analytics),
@@ -26,30 +26,23 @@ These test applications can be used to:
 * Send a view (automatic or manual)
 * Generate a crash (e.g out of bounds, null pointer, kill, etc or a custom crash log)
 
-This app serves as a simple example for building an app using the [Countly React Native SDK](https://github.com/Countly/countly-sdk-react-native-bridge).
+This app serves as a simple example for building an app using the [Countly React Native Bridge SDK](https://github.com/Countly/countly-sdk-react-native-bridge).
 
 ### Prerequisites
 To run the Example App, you need to be able to build React Native apps for Android and iOS on your machine.
 Refer to the [React Native getting started guide](https://reactnative.dev/docs/0.61/enviroment-setup) if you need help setting up your React Native environment.
 
-### Application key
-Also called "appKey" as shorthand. The application key is used to identify for which application this information is tracked. You receive this value by creating a new application in your Countly dashboard and accessing it in its application management screen.
-
-Note: Ensure you are using the App Key (found under Management -> Applications) and not the API Key. Entering the API Key will not work.
-
-### Server URL
-If you are using Countly Enterprise Edition trial servers, use https://try.count.ly, https://us-try.count.ly or https://asia-try.count.ly It is basically the domain from which you are accessing your trial dashboard.
-
-If you use both Community Edition and Enterprise Edition, use your own domain name or IP address, such as https://example.com or https://IP (if SSL has been set up).
+For more information on how to acquire your application key (appKey) and server URL, check [here](https://support.count.ly/hc/en-us/articles/900000908046-Getting-started-with-SDKs#acquiring-your-application-key-and-server-url).
 
 ### Building
 Clone this repository
-
 ```sh
 git clone https://github.com/Countly/countly-sdk-rnb-example.git
 cd countly-sdk-rnb-example/CountlyRNExample
 ```
 Open `App.tsx` and update `"YOUR_API_KEY"` with your Countly application Key and `"https://try.count.ly"` with your server URL.
+
+Run below to install dependencies and run your application on a simulator.
 ```sh
 npm install
 cd ios
@@ -58,11 +51,35 @@ cd ../
 npx react-native run-ios (or run-android)
 ```
 
-If it fails due to Ruby version not matching,
+If your installation fails due to Ruby version not matching,
 Check the required ruby version in `.ruby-version` and run
 ```sh
 rvm install "ruby-2.7.6";
 rvm use "ruby-2.7.6"
+```
+
+### Using local SDK
+Clone the SDK repository and compress to `.tar.gz` file type
+```sh
+git clone https://github.com/Countly/countly-sdk-react-native-bridge.git
+cd countly-sdk-react-native-bridge
+npm pack
+```
+In the package.json for this test application, change 
+
+`"countly-sdk-react-native-bridge": "22.6.5"` to 
+
+`"countly-sdk-react-native-bridge": "file://../../sdk/countly-sdk-react-native-bridge.tgz"`
+
+where `file://../../` is the relative path to the compressed local sdk.
+
+Run below to install dependencies and run your application on a simulator.
+```sh
+npm install
+cd ios
+pod install
+cd ../
+npx react-native run-ios (or run-android)
 ```
 
 ## Security
