@@ -12,8 +12,8 @@ import Countly from 'countly-sdk-react-native-bridge';
 
 const successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
 const failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
-const COUNTLYAPPKEY = '';
-const COUNTLYSERVERKEY = 'https://xxx.count.ly';
+const COUNTLY_APP_KEY = '';
+const COUNTLY_SERVER_KEY = 'https://xxx.count.ly';
 
 class Example extends Component {
     constructor(props) {
@@ -86,7 +86,7 @@ class Example extends Component {
           }
           Countly.configureIntentRedirectionCheck(["MainActivity"], ["com.countly.demo"]);
           Countly.setStarRatingDialogTexts("Title", "Message", "Dismiss");
-          await Countly.init(COUNTLYSERVERKEY, COUNTLYAPPKEY); // Initialize the countly SDK.
+          await Countly.init(COUNTLY_SERVER_KEY, COUNTLY_APP_KEY); // Initialize the countly SDK.
           Countly.appLoadingFinished();
           /**
            * Push notifications settings
