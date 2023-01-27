@@ -6,7 +6,7 @@
  */
 
 import React, { Component } from 'react';
-import { Text, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { Text, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView, Platform, Alert } from 'react-native';
 import CountlyButton from './CountlyButton';
 import Countly from 'countly-sdk-react-native-bridge';
 
@@ -92,10 +92,10 @@ class Example extends Component {
            * Push notifications settings
            * Should be call after init
           */
-          Countly.registerForNotification((theNotification) => {
-            var jsonString = JSON.stringify(JSON.parse(theNotification))
+          Countly.registerForNotification((theNotification: string) => {
+            let jsonString = JSON.stringify(JSON.parse(theNotification))
             console.log("Just received this notification data: " + jsonString);
-            alert('theNotification: ' + jsonString);
+            Alert.alert('theNotification: ' + jsonString);
           }); // Set callback to receive push notifications
           Countly.askForNotificationPermission("android.resource://com.countly.demo/raw/notif_sample"); // This method will ask for permission, enables push notification and send push token to countly server.
         }
@@ -109,35 +109,61 @@ class Example extends Component {
     };
     onSendUserData = () => {
         // example for setUserData
-        var options = {};
-        options.name = "Name of User";
-        options.username = "Username";
-        options.email = "User Email";
-        options.organization = "User Organization";
-        options.phone = "User Contact number";
-        options.picture = "https://count.ly/images/logos/countly-logo.png";
-        options.picturePath = "";
-        options.gender = "Male";
-        options.byear = 1989;
+        interface OptionsProps {
+            name: string;
+            username: string;
+            email: string;
+            organization: string;
+            phone: string;
+            picture: string;
+            picturePath: string;
+            gender: string;
+            byear: number;
+        }
+        let options : OptionsProps = {
+            name: "Name of User",
+            username: "Username",
+            email: "User Email",
+            organization: "User Organization",
+            phone: "User Contact number",
+            picture: "https://count.ly/images/logos/countly-logo.png",
+            picturePath: "",
+            gender: "Male",
+            byear: 1989,
+        }
         Countly.setUserData(options);
     };
 
     onSetUserProperties = () => {
         // example for setUserData
-        var options = {};
+        interface OptionsProps {
+            name: string;
+            username: string;
+            email: string;
+            organization: string;
+            phone: string;
+            picture: string;
+            picturePath: string;
+            gender: string;
+            byear: number;
+            customeValueA: string;
+            customeValueB: string;
+        }
         // Predefined user properties
-        options.name = "Name of User";
-        options.username = "Username";
-        options.email = "User Email";
-        options.organization = "User Organization";
-        options.phone = "User Contact number";
-        options.picture = "https://count.ly/images/logos/countly-logo.png";
-        options.picturePath = "";
-        options.gender = "Male";
-        options.byear = 1989;
-        // Custom User Properties
-        options.customeValueA = "Custom value A";
-        options.customeValueB = "Custom value B";
+        let options : OptionsProps = {
+            name: "Name of User",
+            username: "Username",
+            email: "User Email",
+            organization: "User Organization",
+            phone: "User Contact number",
+            picture: "https://count.ly/images/logos/countly-logo.png",
+            picturePath: "",
+            gender: "Male",
+            byear: 1989,
+            // Custom User Properties
+            customeValueA: "Custom value A",
+            customeValueB: "Custom value B",
+        }
         Countly.userDataBulk.setUserProperties(options);
         Countly.userDataBulk.save();
     };
@@ -166,11 +192,18 @@ class Example extends Component {
 
     onUpdateUserData = () => {
         // example for setUserData
-        var options = {};
-        options.organization = "Updated User Organization";
-        options.phone = "Updated User Contact number";
-        options.gender = "Female";
-        options.byear = 1995;
+        interface OptionsProps {
+            organization: string;
+            phone: string;
+            gender: string;
+            byear: number;
+        }
+        let options : OptionsProps = {
+            organization: "Updated User Organization",
+            phone: "Updated User Contact number",
+            gender: "Female",
+            byear: 1995,
+        }
         Countly.setUserData(options);
     };
     basicEvent = () => {
@@ -185,20 +218,54 @@ class Example extends Component {
     };
     eventWithSegment = () => {
         // example for event with segment
-        var event = {"eventName":"Event With Segment","eventCount":1};
+        interface EventProps {
+            eventName: string;
+            segments: SegmentsProps;
+            eventCount: number;
+        }
+        interface SegmentsProps {
+            Country: string;
+            Age: string;
+        }
+        var event : EventProps = {
+            eventName: "Event With Segment",
+            eventCount: 1,
+            segments: {Country : "Turkey", Age : "28"},
+        };
         event.segments = {"Country" : "Turkey", "Age" : "28"};
         Countly.sendEvent(event);
-        event = {"eventName":"Event With Segment","eventCount":1};
-        event.segments = {"Country" : "France", "Age" : "38"};
+        event = {
+            eventName: "Event With Segment",
+            eventCount: 1,
+            segments: {"Country" : "France", "Age" : "38"}
+        };
         Countly.sendEvent(event);
     };
     eventWithSumAndSegment = () => {
         // example for event with segment and sum
-        var event = {"eventName":"Event With Sum And Segment","eventCount":1,"eventSum":"0.99"};
-        event.segments = {"Country" : "Turkey", "Age" : "28"};
+        interface EventProps {
+            eventName: string;
+            segments: SegmentsProps;
+            eventSum: string;
+            eventCount: number;
+        }
+        interface SegmentsProps {
+            Country: string;
+            Age: string;
+        }
+        var event : EventProps = {
+            eventName: "Event With Sum And Segment",
+            eventCount: 1,
+            eventSum: "0.99",
+            segments: {"Country" : "Turkey", "Age" : "28"},
+        };
         Countly.sendEvent(event);
-        event = {"eventName":"Event With Sum And Segment","eventCount":3,"eventSum":"1.99"};
-        event.segments = {"Country" : "France", "Age" : "38"};
+        event = {
+            "eventName": "Event With Sum And Segment",
+            "eventCount": 3,
+            "eventSum": "1.99",
+            segments: {"Country" : "France", "Age" : "38"},
+        };
         Countly.sendEvent(event);
     };
 
@@ -213,13 +280,17 @@ class Example extends Component {
     /*
     setTimeout may not work correctly if you are attached to Chrome Debugger.
     for workaround see: https://github.com/facebook/react-native/issues/9436
-   */
+*/
     timedEventWithSum = () => {
         // Event with sum
         Countly.startEvent("timedEventWithSum");
-        var event = {
-          "eventName": "timedEventWithSum",
-          "eventSum": "0.99"
+        interface EventProps {
+            eventName: string;
+            eventSum: string;
+        }
+        var event : EventProps = {
+            "eventName": "timedEventWithSum",
+            "eventSum": "0.99"
         };
         setTimeout(() => {
           Countly.endEvent(event);
@@ -229,12 +300,17 @@ class Example extends Component {
     timedEventWithSegment = () => {
         // Event with segment
         Countly.startEvent("timedEventWithSegment");
-        var event = {
-          "eventName": "timedEventWithSegment"
-        };
-        event.segments = {
-          "Country": "Germany",
-          "Age": "32"
+        interface EventProps {
+            eventName: string;
+            segments: SegmentsProps;
+        }
+        interface SegmentsProps {
+            Country: string;
+            Age: string;
+        }
+        var event : EventProps = {
+            "eventName": "timedEventWithSegment",
+            segments: { "Country": "Germany", "Age": "32" }
         };
         setTimeout(() => {
           Countly.endEvent(event);
@@ -244,14 +320,21 @@ class Example extends Component {
     timedEventWithSumAndSegment = () => {
         // Event with Segment, sum and count
         Countly.startEvent("timedEventWithSumAndSegment");
-        var event = {
-          "eventName": "timedEventWithSumAndSegment",
-          "eventCount": 1,
-          "eventSum": "0.99"
-        };
-        event.segments = {
-          "Country": "India",
-          "Age": "21"
+        interface EventProps {
+            eventName: string;
+            segments: SegmentsProps;
+            eventSum: string;
+            eventCount: number;
+        }
+        interface SegmentsProps {
+            Country: string;
+            Age: string;
+        }
+        var event : EventProps = {
+        "eventName": "timedEventWithSumAndSegment",
+        "eventCount": 1,
+        "eventSum": "0.99",
+        segments: { "Country": "India", "Age": "21" }
         };
         setTimeout(() => {
           Countly.endEvent(event);
