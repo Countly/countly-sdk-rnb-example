@@ -6,7 +6,7 @@
  */
 
 import React, { Component } from 'react';
-import { Text, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { Text, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView, Platform, Alert } from 'react-native';
 import CountlyButton from './CountlyButton';
 import Countly from 'countly-sdk-react-native-bridge';
 
@@ -14,6 +14,43 @@ const successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
 const failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
 const COUNTLY_APP_KEY = 'YOUR_APP_KEY';
 const COUNTLY_SERVER_KEY = 'https://xxx.count.ly';
+
+//Base Countly Interfaces
+interface UserDataPredefined {
+    name?: string;
+    username?: string;
+    email?: string;
+    organization?: string;
+    phone?: string;
+    picture?: string;
+    picturePath?: string;
+    gender?: string;
+    byear?: number;
+}
+
+interface Segmentation {}
+
+interface EventProps {
+    eventName: string;
+    segments?: Segmentation;
+    eventCount?: number;
+    eventSum?: string;
+}
+
+//Example App custom interfaces
+interface SegmentationCustom_1 extends Segmentation {
+    Country: string;
+    Age: string;
+}
+
+interface EventPropsCustom_1 extends EventProps {
+    segments?: SegmentationCustom_1;
+}
+
+interface UserDataBulkCustom_1 extends UserDataPredefined {
+    customeValueA?: string;
+    customeValueB?: string;
+}
 
 class Example extends Component {
     constructor(props) {
@@ -65,39 +102,38 @@ class Example extends Component {
     }
 
     onInit = async () => {
-        if(!await Countly.isInitialized()) {
-          /** Recommended settings for Countly initialisation */
-          Countly.setLoggingEnabled(true); // Enable countly internal debugging logs
-          Countly.enableCrashReporting(); // Enable crash reporting to report unhandled crashes to Countly
-          Countly.setRequiresConsent(true); // Set that consent should be required for features to work.
-          Countly.giveConsentInit(["location", "sessions", "attribution", "push", "events", "views", "crashes", "users", "push", "star-rating", "apm", "feedback", "remote-config"]); // give conset for specific features before init.
-          Countly.setLocationInit("TR", "Istanbul", "41.0082,28.9784", "10.2.33.12"); // Set user initial location.
-          /** Optional settings for Countly initialisation */
-          Countly.enableParameterTamperingProtection("salt"); // Set the optional salt to be used for calculating the checksum of requested data which will be sent with each request
-          // Countly.pinnedCertificates("count.ly.cer"); // It will ensure that connection is made with one of the public keys specified
-          // Countly.setHttpPostForced(false); // Set to "true" if you want HTTP POST to be used for all requests
-          Countly.enableApm(); // Enable APM features, which includes the recording of app start time.
-          Countly.pushTokenType(Countly.messagingMode.DEVELOPMENT, "ChannelName", "ChannelDescription"); // Set messaging mode for push notifications
-          if (Platform.OS.match("ios")) {
-            Countly.recordAttributionID("ADVERTISING_ID");
-          }
-          else {
-            Countly.enableAttribution(); // Enable to measure your marketing campaign performance by attributing installs from specific campaigns.
-          }
-          Countly.configureIntentRedirectionCheck(["MainActivity"], ["com.countly.demo"]);
-          Countly.setStarRatingDialogTexts("Title", "Message", "Dismiss");
-          await Countly.init(COUNTLY_SERVER_KEY, COUNTLY_APP_KEY); // Initialize the countly SDK.
-          Countly.appLoadingFinished();
-          /**
-           * Push notifications settings
-           * Should be call after init
-          */
-          Countly.registerForNotification((theNotification) => {
-            var jsonString = JSON.stringify(JSON.parse(theNotification))
-            console.log("Just received this notification data: " + jsonString);
-            alert('theNotification: ' + jsonString);
-          }); // Set callback to receive push notifications
-          Countly.askForNotificationPermission("android.resource://com.countly.demo/raw/notif_sample"); // This method will ask for permission, enables push notification and send push token to countly server.
+        if (!(await Countly.isInitialized())) {
+            /** Recommended settings for Countly initialisation */
+            Countly.setLoggingEnabled(true); // Enable countly internal debugging logs
+            Countly.enableCrashReporting(); // Enable crash reporting to report unhandled crashes to Countly
+            Countly.setRequiresConsent(true); // Set that consent should be required for features to work.
+            Countly.giveConsentInit(['location', 'sessions', 'attribution', 'push', 'events', 'views', 'crashes', 'users', 'push', 'star-rating', 'apm', 'feedback', 'remote-config']); // give conset for specific features before init.
+            Countly.setLocationInit('TR', 'Istanbul', '41.0082,28.9784', '10.2.33.12'); // Set user initial location.
+            /** Optional settings for Countly initialisation */
+            Countly.enableParameterTamperingProtection('salt'); // Set the optional salt to be used for calculating the checksum of requested data which will be sent with each request
+            // Countly.pinnedCertificates("count.ly.cer"); // It will ensure that connection is made with one of the public keys specified
+            // Countly.setHttpPostForced(false); // Set to "true" if you want HTTP POST to be used for all requests
+            Countly.enableApm(); // Enable APM features, which includes the recording of app start time.
+            Countly.pushTokenType(Countly.messagingMode.DEVELOPMENT, 'ChannelName', 'ChannelDescription'); // Set messaging mode for push notifications
+            if (Platform.OS.match('ios')) {
+                Countly.recordAttributionID('ADVERTISING_ID');
+            } else {
+                Countly.enableAttribution(); // Enable to measure your marketing campaign performance by attributing installs from specific campaigns.
+            }
+            Countly.configureIntentRedirectionCheck(['MainActivity'], ['com.countly.demo']);
+            Countly.setStarRatingDialogTexts('Title', 'Message', 'Dismiss');
+            await Countly.init(COUNTLY_SERVER_KEY, COUNTLY_APP_KEY); // Initialize the countly SDK.
+            Countly.appLoadingFinished();
+            /**
+             * Push notifications settings
+             * Should be call after init
+             */
+            Countly.registerForNotification((theNotification: string) => {
+                let jsonString = JSON.stringify(JSON.parse(theNotification));
+                console.log('Just received this notification data: ' + jsonString);
+                Alert.alert('theNotification: ' + jsonString);
+            }); // Set callback to receive push notifications
+            Countly.askForNotificationPermission('android.resource://com.countly.demo/raw/notif_sample'); // This method will ask for permission, enables push notification and send push token to countly server.
         }
     };
 
@@ -109,35 +145,37 @@ class Example extends Component {
     };
     onSendUserData = () => {
         // example for setUserData
-        var options = {};
-        options.name = "Name of User";
-        options.username = "Username";
-        options.email = "User Email";
-        options.organization = "User Organization";
-        options.phone = "User Contact number";
-        options.picture = "https://count.ly/images/logos/countly-logo.png";
-        options.picturePath = "";
-        options.gender = "Male";
-        options.byear = 1989;
+        let options: UserDataPredefined = {
+            name: 'Name of User',
+            username: 'Username',
+            email: 'User Email',
+            organization: 'User Organization',
+            phone: 'User Contact number',
+            picture: 'https://count.ly/images/logos/countly-logo.png',
+            picturePath: '',
+            gender: 'Male',
+            byear: 1989,
+        };
         Countly.setUserData(options);
     };
 
     onSetUserProperties = () => {
         // example for setUserData
-        var options = {};
         // Predefined user properties
-        options.name = "Name of User";
-        options.username = "Username";
-        options.email = "User Email";
-        options.organization = "User Organization";
-        options.phone = "User Contact number";
-        options.picture = "https://count.ly/images/logos/countly-logo.png";
-        options.picturePath = "";
-        options.gender = "Male";
-        options.byear = 1989;
-        // Custom User Properties
-        options.customeValueA = "Custom value A";
-        options.customeValueB = "Custom value B";
+        let options: UserDataBulkCustom_1 = {
+            name: 'Name of User',
+            username: 'Username',
+            email: 'User Email',
+            organization: 'User Organization',
+            phone: 'User Contact number',
+            picture: 'https://count.ly/images/logos/countly-logo.png',
+            picturePath: '',
+            gender: 'Male',
+            byear: 1989,
+            // Custom User Properties
+            customeValueA: 'Custom value A',
+            customeValueB: 'Custom value B',
+        };
         Countly.userDataBulk.setUserProperties(options);
         Countly.userDataBulk.save();
     };
@@ -166,142 +204,156 @@ class Example extends Component {
 
     onUpdateUserData = () => {
         // example for setUserData
-        var options = {};
-        options.organization = "Updated User Organization";
-        options.phone = "Updated User Contact number";
-        options.gender = "Female";
-        options.byear = 1995;
+        let options: UserDataPredefined = {
+            organization: 'Updated User Organization',
+            phone: 'Updated User Contact number',
+            gender: 'Female',
+            byear: 1995,
+        };
         Countly.setUserData(options);
     };
     basicEvent = () => {
         // example for basic event
-        var event = {"eventName":"Basic Event","eventCount":1};
+        var event = { 'eventName': 'Basic Event', 'eventCount': 1 };
         Countly.sendEvent(event);
     };
     eventWithSum = () => {
         // example for event with sum
-        var event = {"eventName":"Event With Sum","eventCount":1,"eventSum":"0.99"};
+        var event = { 'eventName': 'Event With Sum', 'eventCount': 1, 'eventSum': '0.99' };
         Countly.sendEvent(event);
     };
     eventWithSegment = () => {
         // example for event with segment
-        var event = {"eventName":"Event With Segment","eventCount":1};
-        event.segments = {"Country" : "Turkey", "Age" : "28"};
+        var event: EventPropsCustom_1 = {
+            eventName: 'Event With Segment',
+            eventCount: 1,
+            segments: { Country: 'Turkey', Age: '28' },
+        };
+        event.segments = { 'Country': 'Turkey', 'Age': '28' };
         Countly.sendEvent(event);
-        event = {"eventName":"Event With Segment","eventCount":1};
-        event.segments = {"Country" : "France", "Age" : "38"};
+        event = {
+            eventName: 'Event With Segment',
+            eventCount: 1,
+            segments: { 'Country': 'France', 'Age': '38' },
+        };
         Countly.sendEvent(event);
     };
     eventWithSumAndSegment = () => {
         // example for event with segment and sum
-        var event = {"eventName":"Event With Sum And Segment","eventCount":1,"eventSum":"0.99"};
-        event.segments = {"Country" : "Turkey", "Age" : "28"};
+        var event: EventPropsCustom_1 = {
+            eventName: 'Event With Sum And Segment',
+            eventCount: 1,
+            eventSum: '0.99',
+            segments: { 'Country': 'Turkey', 'Age': '28' },
+        };
         Countly.sendEvent(event);
-        event = {"eventName":"Event With Sum And Segment","eventCount":3,"eventSum":"1.99"};
-        event.segments = {"Country" : "France", "Age" : "38"};
+        event = {
+            'eventName': 'Event With Sum And Segment',
+            'eventCount': 3,
+            'eventSum': '1.99',
+            segments: { 'Country': 'France', 'Age': '38' },
+        };
         Countly.sendEvent(event);
     };
 
     // TIMED EVENTS
     startEvent = () => {
-        Countly.startEvent("timedEvent");
+        Countly.startEvent('timedEvent');
         setTimeout(() => {
-          Countly.endEvent("timedEvent");
-        },1000);
+            Countly.endEvent('timedEvent');
+        }, 1000);
     };
 
     /*
     setTimeout may not work correctly if you are attached to Chrome Debugger.
     for workaround see: https://github.com/facebook/react-native/issues/9436
-   */
+*/
     timedEventWithSum = () => {
         // Event with sum
-        Countly.startEvent("timedEventWithSum");
-        var event = {
-          "eventName": "timedEventWithSum",
-          "eventSum": "0.99"
+        Countly.startEvent('timedEventWithSum');
+
+        var event: EventProps = {
+            'eventName': 'timedEventWithSum',
+            'eventSum': '0.99',
         };
+
         setTimeout(() => {
-          Countly.endEvent(event);
-        },1000);
+            Countly.endEvent(event);
+        }, 1000);
     };
 
     timedEventWithSegment = () => {
         // Event with segment
-        Countly.startEvent("timedEventWithSegment");
-        var event = {
-          "eventName": "timedEventWithSegment"
-        };
-        event.segments = {
-          "Country": "Germany",
-          "Age": "32"
+        Countly.startEvent('timedEventWithSegment');
+
+        var event: EventPropsCustom_1 = {
+            'eventName': 'timedEventWithSegment',
+            segments: { 'Country': 'Germany', 'Age': '32' },
         };
         setTimeout(() => {
-          Countly.endEvent(event);
-        },1000);
+            Countly.endEvent(event);
+        }, 1000);
     };
 
     timedEventWithSumAndSegment = () => {
         // Event with Segment, sum and count
-        Countly.startEvent("timedEventWithSumAndSegment");
-        var event = {
-          "eventName": "timedEventWithSumAndSegment",
-          "eventCount": 1,
-          "eventSum": "0.99"
-        };
-        event.segments = {
-          "Country": "India",
-          "Age": "21"
+        Countly.startEvent('timedEventWithSumAndSegment');
+
+        var event: EventPropsCustom_1 = {
+            'eventName': 'timedEventWithSumAndSegment',
+            'eventCount': 1,
+            'eventSum': '0.99',
+            segments: { 'Country': 'India', 'Age': '21' },
         };
         setTimeout(() => {
-          Countly.endEvent(event);
-        },1000);
+            Countly.endEvent(event);
+        }, 1000);
     };
     // TIMED EVENTS
 
     userData_setProperty = () => {
-        Countly.userData.setProperty("setProperty", "keyValue");
+        Countly.userData.setProperty('setProperty', 'keyValue');
     };
 
     userData_increment = () => {
-        Countly.userData.setProperty("increment", 5);
-        Countly.userData.increment("increment");
+        Countly.userData.setProperty('increment', 5);
+        Countly.userData.increment('increment');
     };
 
     userData_incrementBy = () => {
-        Countly.userData.setProperty("incrementBy", 5);
-        Countly.userData.incrementBy("incrementBy", 10);
+        Countly.userData.setProperty('incrementBy', 5);
+        Countly.userData.incrementBy('incrementBy', 10);
     };
 
     userData_multiply = () => {
-        Countly.userData.setProperty("multiply", 5);
-        Countly.userData.multiply("multiply", 20);
+        Countly.userData.setProperty('multiply', 5);
+        Countly.userData.multiply('multiply', 20);
     };
 
     userData_saveMax = () => {
-        Countly.userData.setProperty("saveMax", 5);
-        Countly.userData.saveMax("saveMax", 100);
+        Countly.userData.setProperty('saveMax', 5);
+        Countly.userData.saveMax('saveMax', 100);
     };
 
     userData_saveMin = () => {
-        Countly.userData.setProperty("saveMin", 5);
-        Countly.userData.saveMin("saveMin", 50);
+        Countly.userData.setProperty('saveMin', 5);
+        Countly.userData.saveMin('saveMin', 50);
     };
 
     userData_setOnce = () => {
-        Countly.userData.setOnce("setOnce", 200);
+        Countly.userData.setOnce('setOnce', 200);
     };
 
     userData_pushUniqueValue = () => {
-        Countly.userData.pushUniqueValue("type", "morning");
+        Countly.userData.pushUniqueValue('type', 'morning');
     };
 
     userData_pushValue = () => {
-        Countly.userData.pushValue("type", "morning");
+        Countly.userData.pushValue('type', 'morning');
     };
 
     userData_pullValue = () => {
-        Countly.userData.pullValue("type", "morning");
+        Countly.userData.pullValue('type', 'morning');
     };
 
     changeDeviceId = () => {
@@ -317,11 +369,11 @@ class Example extends Component {
     };
 
     giveMultipleConsent = () => {
-        Countly.giveConsent(["events", "views", "star-rating", "crashes", "invalidFeatureName"]);
+        Countly.giveConsent(['events', 'views', 'star-rating', 'crashes', 'invalidFeatureName']);
     };
 
     removeMultipleConsent = () => {
-        Countly.removeConsent(["events", "views"]);
+        Countly.removeConsent(['events', 'views']);
     };
 
     giveAllConsent = () => {
@@ -334,45 +386,45 @@ class Example extends Component {
 
     remoteConfigUpdate = () => {
         Countly.remoteConfigUpdate((data) => {
-          console.log(data);
+            console.log(data);
         });
     };
 
     updateRemoteConfigForKeysOnly = () => {
-        Countly.updateRemoteConfigForKeysOnly(["test1"],(data) => {
-          console.log(data);
+        Countly.updateRemoteConfigForKeysOnly(['test1'], (data) => {
+            console.log(data);
         });
     };
 
     updateRemoteConfigExceptKeys = () => {
-        Countly.updateRemoteConfigExceptKeys(["test1"],(data) => {
-          console.log(data);
+        Countly.updateRemoteConfigExceptKeys(['test1'], (data) => {
+            console.log(data);
         });
     };
 
     getRemoteConfigValueForKeyBoolean = () => {
-        Countly.getRemoteConfigValueForKey("booleanValue", (data) => {
-          console.log(data);
+        Countly.getRemoteConfigValueForKey('booleanValue', (data) => {
+            console.log(data);
         });
     };
     getRemoteConfigValueForKeyFloat = () => {
-        Countly.getRemoteConfigValueForKey("floatValue", (data) => {
-          console.log(data);
+        Countly.getRemoteConfigValueForKey('floatValue', (data) => {
+            console.log(data);
         });
     };
     getRemoteConfigValueForKeyInteger = () => {
-        Countly.getRemoteConfigValueForKey("integerValue", (data) => {
-          console.log(data);
+        Countly.getRemoteConfigValueForKey('integerValue', (data) => {
+            console.log(data);
         });
     };
     getRemoteConfigValueForKeyString = () => {
-        Countly.getRemoteConfigValueForKey("stringValue", (data) => {
-          console.log(data);
+        Countly.getRemoteConfigValueForKey('stringValue', (data) => {
+            console.log(data);
         });
     };
     getRemoteConfigValueForKeyJSON = () => {
-        Countly.getRemoteConfigValueForKey("jsonValue", (data) => {
-          console.log(data);
+        Countly.getRemoteConfigValueForKey('jsonValue', (data) => {
+            console.log(data);
         });
     };
 
@@ -381,12 +433,12 @@ class Example extends Component {
     };
 
     setLocation = () => {
-        var countryCode = "us";
-        var city = "Houston";
-        var latitude = "29.634933";
-        var longitude = "-95.220255";
-        var ipAddress = "103.238.105.167";
-        Countly.setLocation(countryCode, city, latitude + "," + longitude, ipAddress);
+        var countryCode = 'us';
+        var city = 'Houston';
+        var latitude = '29.634933';
+        var longitude = '-95.220255';
+        var ipAddress = '103.238.105.167';
+        Countly.setLocation(countryCode, city, latitude + ',' + longitude, ipAddress);
     };
     disableLocation = () => {
         Countly.disableLocation();
@@ -405,86 +457,92 @@ class Example extends Component {
     };
 
     showFeedbackPopup = () => {
-        Countly.showFeedbackPopup("5f8c837a5294f7aae370067c", "Submit");
+        Countly.showFeedbackPopup('5f8c837a5294f7aae370067c', 'Submit');
     };
 
     presentRatingWidget = () => {
-        Countly.presentRatingWidgetWithID("625f9032028614795fe5a85b", "Submit", (error) => {
-          if (error != null) {
-            console.log(error);
-          }
+        Countly.presentRatingWidgetWithID('625f9032028614795fe5a85b', 'Submit', (error) => {
+            if (error != null) {
+                console.log(error);
+            }
         });
     };
 
     presentRatingWidgetUsingEditBox = function () {
-        Countly.presentRatingWidgetWithID(this.state.ratingId, "Submit", (error) => {
-          if (error != null) {
-            console.log("presentRatingWidgetUsingEditBox : " + error);
-          }
+        Countly.presentRatingWidgetWithID(this.state.ratingId, 'Submit', (error) => {
+            if (error != null) {
+                console.log('presentRatingWidgetUsingEditBox : ' + error);
+            }
         });
     };
 
     showSurvey = () => {
         Countly.getFeedbackWidgets((retrivedWidgets, error) => {
-          if (error != null) {
-            console.log("showSurvey Error : " + error);
-          }
-          else {
-            console.log("showSurvey Success : " + retrivedWidgets.length);
-            var surveyWidget =  retrivedWidgets.find(x => x.type === 'survey')
-            if(surveyWidget) {
-              Countly.presentFeedbackWidgetObject(surveyWidget, "Close", function() {
-                console.log("showSurvey presentFeedbackWidgetObject : " + "Widgetshown");
-              },
-              function() {
-                console.log("showSurvey presentFeedbackWidgetObject : " + "Widgetclosed");
-              })
+            if (error != null) {
+                console.log('showSurvey Error : ' + error);
+            } else {
+                console.log('showSurvey Success : ' + retrivedWidgets.length);
+                var surveyWidget = retrivedWidgets.find((x) => x.type === 'survey');
+                if (surveyWidget) {
+                    Countly.presentFeedbackWidgetObject(
+                        surveyWidget,
+                        'Close',
+                        function () {
+                            console.log('showSurvey presentFeedbackWidgetObject : ' + 'Widgetshown');
+                        },
+                        function () {
+                            console.log('showSurvey presentFeedbackWidgetObject : ' + 'Widgetclosed');
+                        }
+                    );
+                }
             }
-          }
         });
     };
 
     showNPS = () => {
         Countly.getFeedbackWidgets((retrivedWidgets, error) => {
-          if (error != null) {
-            console.log("showNPS Error : " + error);
-          }
-          else {
-            console.log("showNPS Success : " + retrivedWidgets.length);
-            var npsWidget =  retrivedWidgets.find(x => x.type === 'nps')
-            if(npsWidget) {
-              Countly.presentFeedbackWidgetObject(npsWidget, "Close", function() {
-                console.log("showNPS presentFeedbackWidgetObject : " + "Widgetshown");
-              },
-              function() {
-                console.log("showNPS presentFeedbackWidgetObject : " + "Widgetclosed");
-              })
+            if (error != null) {
+                console.log('showNPS Error : ' + error);
+            } else {
+                console.log('showNPS Success : ' + retrivedWidgets.length);
+                var npsWidget = retrivedWidgets.find((x) => x.type === 'nps');
+                if (npsWidget) {
+                    Countly.presentFeedbackWidgetObject(
+                        npsWidget,
+                        'Close',
+                        function () {
+                            console.log('showNPS presentFeedbackWidgetObject : ' + 'Widgetshown');
+                        },
+                        function () {
+                            console.log('showNPS presentFeedbackWidgetObject : ' + 'Widgetclosed');
+                        }
+                    );
+                }
             }
-          }
         });
     };
 
     addCrashLog = () => {
-        Countly.addCrashLog("My crash log in string.");
+        Countly.addCrashLog('My crash log in string.');
     };
 
     addLogException = () => {
-        Countly.addCrashLog("User Performed Step A");
+        Countly.addCrashLog('User Performed Step A');
         setTimeout(() => {
-          Countly.addCrashLog("User Performed Step B");
-        },1000);
+            Countly.addCrashLog('User Performed Step B');
+        }, 1000);
         setTimeout(() => {
-          Countly.addCrashLog("User Performed Step C");
-          try {
-              var a = {};
-              var x = a.b.c; // this will create error.
-          } catch (error) {
-            setTimeout(() => {
-              var stack = error.stack.toString();
-              Countly.logException(stack, true, {"_facebook_version": "0.0.1"});
-            },1000);
-          }
-        },1000);
+            Countly.addCrashLog('User Performed Step C');
+            try {
+                var a = {};
+                var x = a.b.c; // this will create error.
+            } catch (error) {
+                setTimeout(() => {
+                    var stack = error.stack.toString();
+                    Countly.logException(stack, true, { '_facebook_version': '0.0.1' });
+                }, 1000);
+            }
+        }, 1000);
     };
 
     logException = () => {
@@ -493,14 +551,14 @@ class Example extends Component {
 
     // APM Examples
     startTrace = () => {
-        var traceKey = "Trace Key";
+        var traceKey = 'Trace Key';
         Countly.startTrace(traceKey);
     };
     endTrace = () => {
-        var traceKey = "Trace Key";
+        var traceKey = 'Trace Key';
         var customMetric = {
-          "ABC": 1233,
-          "C44C": 1337
+            'ABC': 1233,
+            'C44C': 1337,
         };
         Countly.endTrace(traceKey, customMetric);
     };
@@ -508,14 +566,14 @@ class Example extends Component {
         return Math.floor(Math.random() * number);
     };
     recordNetworkTraceSuccess = () => {
-        var networkTraceKey = "api/endpoint.1";
+        var networkTraceKey = 'api/endpoint.1';
         var responseCode = successCodes[this.random(successCodes.length)];
         var requestPayloadSize = this.random(700) + 200;
         var responsePayloadSize = this.random(700) + 200;
         Countly.recordNetworkTrace(networkTraceKey, responseCode, requestPayloadSize, responsePayloadSize);
     };
     recordNetworkTraceFailure = () => {
-        var networkTraceKey = "api/endpoint.1";
+        var networkTraceKey = 'api/endpoint.1';
         var responseCode = failureCodes[this.random(failureCodes.length)];
         var requestPayloadSize = this.random(700) + 250;
         var responsePayloadSize = this.random(700) + 250;
@@ -525,7 +583,7 @@ class Example extends Component {
     };
 
     setCustomCrashSegments = () => {
-        var segment = {"Key": "Value"};
+        var segment = { 'Key': 'Value' };
         Countly.setCustomCrashSegments(segment);
     };
 
@@ -537,7 +595,7 @@ class Example extends Component {
 
     setCustomMetrics = () => {
         var customMetric = {
-          "_carrier": "Custom Carrier"
+            '_carrier': 'Custom Carrier',
         };
         Countly.setCustomMetrics(customMetric);
     };
@@ -583,8 +641,8 @@ class Example extends Component {
                         <Image source={{ uri: 'https://count.ly/images/logos/countly-logo.png' }} style={{ width: 144, height: 42 }} onError={(e) => console.log(e.nativeEvent.error)} />
                         <Text style={[{ fontSize: 24, textAlign: 'center' }]}>React Native Demo App</Text>
                     </View>
-                    <CountlyButton onPress={this.test} title="Test" color="#1b1c1d" lightText={true}/>
-                    <CountlyButton onPress={this.onInit} title="Init" color="#ffffff"/>
+                    <CountlyButton onPress={this.test} title="Test" color="#1b1c1d" lightText={true} />
+                    <CountlyButton onPress={this.onInit} title="Init" color="#ffffff" />
                     <CountlyButton onPress={this.onStart} title="Start" color="#5bbd72" />
                     <CountlyButton onPress={this.onStop} title="Stop" color="#d95c5c" />
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
