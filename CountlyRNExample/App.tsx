@@ -638,7 +638,7 @@ class Example extends Component {
             <SafeAreaView>
                 <ScrollView>
                     <View style={{ justifyContent: 'center', alignItems: 'center', margin: 20 }}>
-                        <Image source={{ uri: 'https://count.ly/images/logos/countly-logo.png' }} style={{ width: 144, height: 42 }} onError={(e) => console.log(e.nativeEvent.error)} />
+                        <Image source={require('./asset/countly-logo.png')} style={{ width: 144, height: 42 }} onError={(e) => console.log(e.nativeEvent.error)} />
                         <Text style={[{ fontSize: 24, textAlign: 'center' }]}>React Native Demo App</Text>
                     </View>
                     <CountlyButton onPress={this.test} title="Test" color="#1b1c1d" lightText={true} />
