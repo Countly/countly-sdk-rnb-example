@@ -526,7 +526,7 @@ class Example extends Component {
         Countly.addCrashLog('My crash log in string.');
     };
 
-    addLogException = () => {
+    recordException = () => {
         Countly.addCrashLog('User Performed Step A');
         setTimeout(() => {
             Countly.addCrashLog('User Performed Step B');
@@ -543,10 +543,6 @@ class Example extends Component {
                 }, 1000);
             }
         }, 1000);
-    };
-
-    logException = () => {
-        Countly.logException();
     };
 
     // APM Examples
