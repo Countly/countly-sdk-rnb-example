@@ -537,12 +537,10 @@ class Example extends Component {
                 var a = {};
                 var x = a.b.c; // this will create error.
             } catch (error) {
-                setTimeout(() => {
-                    var stack = error.stack.toString();
-                    Countly.logException(stack, true, { '_facebook_version': '0.0.1' });
-                }, 1000);
+                var stack = error.stack.toString();
+                Countly.logException(stack, true, { '_library_a_version': '0.0.1' });
             }
-        }, 1000);
+        }, 1010);
     };
 
     // APM Examples
@@ -643,7 +641,7 @@ class Example extends Component {
                     <CountlyButton onPress={this.onStop} title="Stop" color="#d95c5c" />
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
                     <Text style={[{ textAlign: 'center' }]}>Events Start</Text>
-                    <CountlyButton onPress={this.basicEvent} title="Basic Events" color="#e0e0e0" />
+                    <CountlyButton onPress={this.basicEvent} title="Basic Event" color="#e0e0e0" />
                     <CountlyButton onPress={this.eventWithSum} title="Event with Sum" color="#e0e0e0" />
                     <CountlyButton onPress={this.eventWithSegment} title="Event with Segment" color="#e0e0e0" />
                     <CountlyButton onPress={this.eventWithSumAndSegment} title="Even with Sum and Segment" color="#841584" />
