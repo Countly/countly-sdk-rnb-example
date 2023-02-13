@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 import { Text, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView, Platform, Alert } from 'react-native';
 import CountlyButton from './CountlyButton';
 import Countly from 'countly-sdk-react-native-bridge';
+import CountlyConfig from 'countly-sdk-react-native-bridge/CountlyConfig';
 
 const successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
 const failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
@@ -107,7 +108,7 @@ class Example extends Component {
             Countly.setLoggingEnabled(true); // Enable countly internal debugging logs
             Countly.enableCrashReporting(); // Enable crash reporting to report unhandled crashes to Countly
             Countly.setRequiresConsent(true); // Set that consent should be required for features to work.
-            Countly.giveConsentInit(['location', 'sessions', 'attribution', 'push', 'events', 'views', 'crashes', 'users', 'push', 'star-rating', 'apm', 'feedback', 'remote-config']); // give conset for specific features before init.
+            Countly.giveConsentInit(['location', 'sessions', 'attribution', 'push', 'events', 'views', 'crashes', 'users', 'push', 'star-rating', 'apm', 'feedback', 'remote-config']); // give consent for specific features before init.
             Countly.setLocationInit('TR', 'Istanbul', '41.0082,28.9784', '10.2.33.12'); // Set user initial location.
             /** Optional settings for Countly initialisation */
             Countly.enableParameterTamperingProtection('salt'); // Set the optional salt to be used for calculating the checksum of requested data which will be sent with each request
@@ -135,6 +136,45 @@ class Example extends Component {
             }); // Set callback to receive push notifications
             Countly.askForNotificationPermission('android.resource://com.countly.demo/raw/notif_sample'); // This method will ask for permission, enables push notification and send push token to countly server.
         }
+    };
+
+    onInitWithConfig = async () => {
+        if (await Countly.isInitialized()) {
+            return;
+        }
+
+        const countlyConfig = new CountlyConfig(COUNTLY_APP_KEY, 'deviceId', COUNTLY_SERVER_KEY)
+        .setLoggingEnabled(true) // Enable countly internal debugging logs
+        .enableCrashReporting() // Enable crash reporting to report unhandled crashes to Countly
+        .setRequiresConsent(true) // Set that consent should be required for features to work.
+        .giveConsentInit(['location', 'sessions', 'attribution', 'push', 'events', 'views', 'crashes', 'users', 'push', 'star-rating', 'apm', 'feedback', 'remote-config']) // give consent for specific features before init.
+        .setLocationInit('TR', 'Istanbul', '41.0082,28.9784', '10.2.33.12') // Set user initial location.
+        /** Optional settings for Countly initialisation */
+        .enableParameterTamperingProtection('salt') // Set the optional salt to be used for calculating the checksum of requested data which will be sent with each request
+        // .pinnedCertificates("count.ly.cer"); // It will ensure that connection is made with one of the public keys specified
+        // .setHttpPostForced(false); // Set to "true" if you want HTTP POST to be used for all requests
+        .enableApm() // Enable APM features, which includes the recording of app start time.
+        .pushTokenType(Countly.messagingMode.DEVELOPMENT, 'ChannelName', 'ChannelDescription') // Set messaging mode for push notifications
+        .configureIntentRedirectionCheck(['MainActivity'], ['com.countly.demo'])
+        .setStarRatingDialogTexts('Title', 'Message', 'Dismiss');
+        if (Platform.OS.match('ios')) {
+            countlyConfig.recordAttributionID('ADVERTISING_ID');
+        } else {
+            countlyConfig.enableAttribution(); // Enable to measure your marketing campaign performance by attributing installs from specific campaigns.
+        }
+
+        await Countly.initWithConfig(countlyConfig); // Initialize the countly SDK.
+        Countly.appLoadingFinished();
+        /**
+         * Push notifications settings
+         * Should be call after init
+         */
+        Countly.registerForNotification((theNotification: string) => {
+            let jsonString = JSON.stringify(JSON.parse(theNotification));
+            console.log('Just received this notification data: ' + jsonString);
+            Alert.alert('theNotification: ' + jsonString);
+        }); // Set callback to receive push notifications
+        Countly.askForNotificationPermission('android.resource://com.countly.demo/raw/notif_sample'); // This method will ask for permission, enables push notification and send push token to countly server.
     };
 
     onStart = () => {
@@ -643,6 +683,7 @@ class Example extends Component {
                     </View>
                     <CountlyButton onPress={this.test} title="Test" color="#1b1c1d" lightText={true} />
                     <CountlyButton onPress={this.onInit} title="Init" color="#ffffff" />
+                    <CountlyButton onPress={this.onInitWithConfig} title="Init With Config" color="#f0f0f0" />
                     <CountlyButton onPress={this.onStart} title="Start" color="#5bbd72" />
                     <CountlyButton onPress={this.onStop} title="Stop" color="#d95c5c" />
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
