@@ -142,8 +142,7 @@ class Example extends Component {
         if (await Countly.isInitialized()) {
             return;
         }
-
-        const countlyConfig = new CountlyConfig(COUNTLY_APP_KEY, 'deviceId', COUNTLY_SERVER_KEY)
+        const countlyConfig = new CountlyConfig(COUNTLY_SERVER_KEY, COUNTLY_APP_KEY)
         .setLoggingEnabled(true) // Enable countly internal debugging logs
         .enableCrashReporting() // Enable crash reporting to report unhandled crashes to Countly
         .setRequiresConsent(true) // Set that consent should be required for features to work.
@@ -164,7 +163,7 @@ class Example extends Component {
         }
 
         await Countly.initWithConfig(countlyConfig); // Initialize the countly SDK.
-        Countly.appLoadingFinished();
+        // Countly.appLoadingFinished(); // called inside initWithConfig
         /**
          * Push notifications settings
          * Should be call after init
