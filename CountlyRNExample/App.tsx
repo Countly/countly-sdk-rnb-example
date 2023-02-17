@@ -523,7 +523,8 @@ class Example extends Component {
     };
 
     addCrashLog = () => {
-        Countly.addCrashLog('My crash log in string.');
+        const timestamp = Math.floor(new Date().getTime() / 1000);
+        Countly.addCrashLog('My crash log in string. Time: ' + timestamp.toString());
     };
 
     recordException = () => {
@@ -701,6 +702,7 @@ class Example extends Component {
                     <CountlyButton onPress={this.showNPS} title="Show NPS" color="#00b5ad" />
                     <CountlyButton onPress={this.eventSendThreshold} title="Set Event Threshold" color="#00b5ad" />
                     <CountlyButton onPress={this.setCustomCrashSegments} title="Set Custom Crash Segment" color="#00b5ad" />
+                    <CountlyButton onPress={this.recordException} title="Record Exception" color="#00b5ad" />
                     <CountlyButton onPress={this.setCustomMetrics} title="Set Custom Metrics" color="#00b5ad" />
                     <Text style={[{ textAlign: 'center' }]}>Other Methods End</Text>
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
