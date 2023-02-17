@@ -523,10 +523,11 @@ class Example extends Component {
     };
 
     addCrashLog = () => {
-        Countly.addCrashLog('My crash log in string.');
+        const timestamp = Math.floor(new Date().getTime() / 1000);
+        Countly.addCrashLog('My crash log in string. Time: ' + timestamp.toString());
     };
 
-    addLogException = () => {
+    recordException = () => {
         Countly.addCrashLog('User Performed Step A');
         setTimeout(() => {
             Countly.addCrashLog('User Performed Step B');
@@ -537,16 +538,10 @@ class Example extends Component {
                 var a = {};
                 var x = a.b.c; // this will create error.
             } catch (error) {
-                setTimeout(() => {
-                    var stack = error.stack.toString();
-                    Countly.logException(stack, true, { '_facebook_version': '0.0.1' });
-                }, 1000);
+                var stack = error.stack.toString();
+                Countly.logException(stack, true, { '_library_a_version': '0.0.1' });
             }
-        }, 1000);
-    };
-
-    logException = () => {
-        Countly.logException();
+        }, 1010);
     };
 
     // APM Examples
@@ -647,7 +642,7 @@ class Example extends Component {
                     <CountlyButton onPress={this.onStop} title="Stop" color="#d95c5c" />
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
                     <Text style={[{ textAlign: 'center' }]}>Events Start</Text>
-                    <CountlyButton onPress={this.basicEvent} title="Basic Events" color="#e0e0e0" />
+                    <CountlyButton onPress={this.basicEvent} title="Basic Event" color="#e0e0e0" />
                     <CountlyButton onPress={this.eventWithSum} title="Event with Sum" color="#e0e0e0" />
                     <CountlyButton onPress={this.eventWithSegment} title="Event with Segment" color="#e0e0e0" />
                     <CountlyButton onPress={this.eventWithSumAndSegment} title="Even with Sum and Segment" color="#841584" />
@@ -707,6 +702,7 @@ class Example extends Component {
                     <CountlyButton onPress={this.showNPS} title="Show NPS" color="#00b5ad" />
                     <CountlyButton onPress={this.eventSendThreshold} title="Set Event Threshold" color="#00b5ad" />
                     <CountlyButton onPress={this.setCustomCrashSegments} title="Set Custom Crash Segment" color="#00b5ad" />
+                    <CountlyButton onPress={this.recordException} title="Record Exception" color="#00b5ad" />
                     <CountlyButton onPress={this.setCustomMetrics} title="Set Custom Metrics" color="#00b5ad" />
                     <Text style={[{ textAlign: 'center' }]}>Other Methods End</Text>
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
