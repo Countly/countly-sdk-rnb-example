@@ -150,8 +150,8 @@ class Example extends Component {
         .setLocationInit('TR', 'Istanbul', '41.0082,28.9784', '10.2.33.12') // Set user initial location.
         /** Optional settings for Countly initialisation */
         .enableParameterTamperingProtection('salt') // Set the optional salt to be used for calculating the checksum of requested data which will be sent with each request
-        // .pinnedCertificates("count.ly.cer"); // It will ensure that connection is made with one of the public keys specified
-        // .setHttpPostForced(false); // Set to "true" if you want HTTP POST to be used for all requests
+        // .pinnedCertificates("count.ly.cer") // It will ensure that connection is made with one of the public keys specified
+        // .setHttpPostForced(false) // Set to "true" if you want HTTP POST to be used for all requests
         .enableApm() // Enable APM features, which includes the recording of app start time.
         .pushTokenType(Countly.messagingMode.DEVELOPMENT, 'ChannelName', 'ChannelDescription') // Set messaging mode for push notifications
         .configureIntentRedirectionCheck(['MainActivity'], ['com.countly.demo'])
@@ -163,7 +163,7 @@ class Example extends Component {
         }
 
         await Countly.initWithConfig(countlyConfig); // Initialize the countly SDK.
-        // Countly.appLoadingFinished(); // called inside initWithConfig
+        Countly.appLoadingFinished();
         /**
          * Push notifications settings
          * Should be call after init
