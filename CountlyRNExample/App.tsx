@@ -126,7 +126,7 @@ class Example extends Component {
             countlyConfig.enableAttribution(); // Enable to measure your marketing campaign performance by attributing installs from specific campaigns.
         }
 
-        await Countly.init(countlyConfig); // Initialize the countly SDK.
+        await Countly.initWithConfig(countlyConfig); // Initialize the countly SDK.
         Countly.appLoadingFinished();
         /**
          * Push notifications settings
