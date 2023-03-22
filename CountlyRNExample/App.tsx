@@ -12,8 +12,8 @@ import Countly from 'countly-sdk-react-native-bridge';
 
 const successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
 const failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
-const COUNTLY_APP_KEY = 'YOUR_APP_KEY';
-const COUNTLY_SERVER_KEY = 'https://xxx.count.ly';
+const COUNTLY_APP_KEY = '58594c9a3f461ebc000761a68c2146659ef75ea0';
+const COUNTLY_SERVER_KEY = 'https://master.count.ly';
 
 //Base Countly Interfaces
 interface UserDataPredefined {
@@ -120,7 +120,7 @@ class Example extends Component {
             } else {
                 Countly.enableAttribution(); // Enable to measure your marketing campaign performance by attributing installs from specific campaigns.
             }
-            Countly.configureIntentRedirectionCheck(['MainActivity'], ['com.countly.demo']);
+            Countly.configureIntentRedirectionCheck(['MainActivity'], ['com.countlyrnexample']);
             Countly.setStarRatingDialogTexts('Title', 'Message', 'Dismiss');
             await Countly.init(COUNTLY_SERVER_KEY, COUNTLY_APP_KEY); // Initialize the countly SDK.
             Countly.appLoadingFinished();
@@ -133,7 +133,7 @@ class Example extends Component {
                 console.log('Just received this notification data: ' + jsonString);
                 Alert.alert('theNotification: ' + jsonString);
             }); // Set callback to receive push notifications
-            Countly.askForNotificationPermission('android.resource://com.countly.demo/raw/notif_sample'); // This method will ask for permission, enables push notification and send push token to countly server.
+            Countly.askForNotificationPermission(); // This method will ask for permission, enables push notification and send push token to countly server.
         }
     };
 
