@@ -13,8 +13,14 @@ import CountlyConfig from 'countly-sdk-react-native-bridge/CountlyConfig';
 
 const successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
 const failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
-const COUNTLY_APP_KEY = 'YOUR_APP_KEY';
-const COUNTLY_SERVER_KEY = 'https://xxx.count.ly';
+const COUNTLY_APP_KEY = '58594c9a3f461ebc000761a68c2146659ef75ea0';
+const COUNTLY_SERVER_KEY = 'https://master.count.ly';
+
+class AttributionKey {
+    static IDFA = 'idfa';
+    static AdvertisingID = 'adid';
+}
+const campaignData = '{cid:"[PROVIDED_CAMPAIGN_ID]", cuid:"[PROVIDED_CAMPAIGN_USER_ID]"}';
 
 //Base Countly Interfaces
 interface UserDataPredefined {
@@ -103,6 +109,13 @@ class Example extends Component {
     }
 
     onInit = async () => {
+        const attributionValues = {};
+        if (Platform.OS.match('ios')) {
+          attributionValues[AttributionKey.IDFA] = 'IDFA';
+        } else {
+          attributionValues[AttributionKey.AdvertisingID] = 'AdvertisingID';
+        }
+
         if (await Countly.isInitialized()) {
             return;
         }
@@ -119,7 +132,9 @@ class Example extends Component {
         .enableApm() // Enable APM features, which includes the recording of app start time.
         .pushTokenType(Countly.messagingMode.DEVELOPMENT, 'ChannelName', 'ChannelDescription') // Set messaging mode for push notifications
         .configureIntentRedirectionCheck(['MainActivity'], ['com.countly.demo'])
-        .setStarRatingDialogTexts('Title', 'Message', 'Dismiss');
+        .setStarRatingDialogTexts('Title', 'Message', 'Dismiss')
+        .recordIndirectAttribution(attributionValues)
+        .recordDirectAttribution('countly', campaignData);
 
         await Countly.initWithConfig(countlyConfig); // Initialize the countly SDK.
         Countly.appLoadingFinished();
@@ -598,6 +613,21 @@ class Example extends Component {
         Countly.setCustomMetrics(customMetric);
     };
 
+    recordDirectAttribution = () => {
+        Countly.recordDirectAttribution('countly', campaignData);
+    };
+
+    recordIndirectAttribution = () => {
+        const attributionValues = {};
+        if (Platform.OS.match('ios')) {
+            attributionValues[AttributionKey.IDFA] = 'IDFA';
+        } else {
+            attributionValues[AttributionKey.AdvertisingID] = 'AdvertisingID';
+        }
+
+        Countly.recordIndirectAttribution(attributionValues);
+    };
+
     test = () => {
         this.onInit();
         this.onStart();
@@ -884,6 +914,8 @@ class Example extends Component {
                     <CountlyButton onPress={this.endTrace} title="End Trace" color="#1b1c1d" lightText={true} />
                     <CountlyButton onPress={this.recordNetworkTraceSuccess} title="End Network Request Success" color="#1b1c1d" lightText={true} />
                     <CountlyButton onPress={this.recordNetworkTraceFailure} title="End Network Request Failure" color="#1b1c1d" lightText={true} />
+                    <CountlyButton onPress={this.recordIndirectAttribution} title="Record Direct Attribution" color="#1b1c1d" lightText={true} />
+                    <CountlyButton onPress={this.recordDirectAttribution} title="Record Indirect Attribution" color="#1b1c1d" lightText={true} />
                     <Text style={[{ textAlign: 'center' }]}>APM Example Start</Text>
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
                     {/*
