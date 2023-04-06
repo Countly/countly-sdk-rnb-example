@@ -120,11 +120,6 @@ class Example extends Component {
         .pushTokenType(Countly.messagingMode.DEVELOPMENT, 'ChannelName', 'ChannelDescription') // Set messaging mode for push notifications
         .configureIntentRedirectionCheck(['MainActivity'], ['com.countly.demo'])
         .setStarRatingDialogTexts('Title', 'Message', 'Dismiss');
-        if (Platform.OS.match('ios')) {
-            countlyConfig.recordAttributionID('ADVERTISING_ID');
-        } else {
-            countlyConfig.enableAttribution(); // Enable to measure your marketing campaign performance by attributing installs from specific campaigns.
-        }
 
         await Countly.initWithConfig(countlyConfig); // Initialize the countly SDK.
         Countly.appLoadingFinished();
