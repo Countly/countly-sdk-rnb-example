@@ -120,6 +120,7 @@ class Example extends Component {
             return;
         }
         const countlyConfig = new CountlyConfig(COUNTLY_SERVER_KEY, COUNTLY_APP_KEY)
+        // .setDeviceID(Countly.TemporaryDeviceIDString) // Enable temporary id mode
         .setLoggingEnabled(true) // Enable countly internal debugging logs
         .enableCrashReporting() // Enable crash reporting to report unhandled crashes to Countly
         .setRequiresConsent(true) // Set that consent should be required for features to work.
@@ -148,8 +149,6 @@ class Example extends Component {
             Alert.alert('theNotification: ' + jsonString);
         }); // Set callback to receive push notifications
         Countly.askForNotificationPermission('android.resource://com.countly.demo/raw/notif_sample'); // This method will ask for permission, enables push notification and send push token to countly server.
-        // Countly.changeDeviceId('TemporaryDeviceID', false); // Uncomment to test temporary device id type.
-        // console.log(await Countly.getDeviceIDType()); // print the device id type.
     };
 
     onStart = () => {
@@ -369,6 +368,10 @@ class Example extends Component {
 
     userData_pullValue = () => {
         Countly.userData.pullValue('type', 'morning');
+    };
+
+    temporaryDeviceIdMode = () => {
+        Countly.changeDeviceId(Countly.TemporaryDeviceIDString);
     };
 
     changeDeviceId = () => {
@@ -738,6 +741,7 @@ class Example extends Component {
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
                     <Text style={[{ textAlign: 'center' }]}>Push Notification Start</Text>
                     <CountlyButton onPress={this.askForNotificationPermission} title="askForNotificationPermission" color="#00b5ad" />
+                    <CountlyButton onPress={this.temporaryDeviceIdMode} title="Test Temporary Device ID" color="#00b5ad" />
                     <CountlyButton onPress={this.changeDeviceId} title="Change Device ID" color="#00b5ad" />
                     <Text style={[{ textAlign: 'center' }]}>Push Notification End</Text>
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
