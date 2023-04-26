@@ -741,7 +741,7 @@ class Example extends Component {
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
                     <Text style={[{ textAlign: 'center' }]}>Push Notification Start</Text>
                     <CountlyButton onPress={this.askForNotificationPermission} title="askForNotificationPermission" color="#00b5ad" />
-                    <CountlyButton onPress={this.temporaryDeviceIdMode} title="Test Temporary Device ID" color="#00b5ad" />
+                    <CountlyButton onPress={this.temporaryDeviceIdMode} title="Enter Temporary Device ID Mode" color="#00b5ad" />
                     <CountlyButton onPress={this.changeDeviceId} title="Change Device ID" color="#00b5ad" />
                     <Text style={[{ textAlign: 'center' }]}>Push Notification End</Text>
                     <Text style={[{ textAlign: 'center' }]}>.</Text>
