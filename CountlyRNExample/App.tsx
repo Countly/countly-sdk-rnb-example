@@ -148,6 +148,8 @@ class Example extends Component {
             Alert.alert('theNotification: ' + jsonString);
         }); // Set callback to receive push notifications
         Countly.askForNotificationPermission('android.resource://com.countly.demo/raw/notif_sample'); // This method will ask for permission, enables push notification and send push token to countly server.
+        // Countly.changeDeviceId('TemporaryDeviceID', false); // Uncomment to test temporary device id type.
+        // console.log(await Countly.getDeviceIDType()); // print the device id type.
     };
 
     onStart = () => {
