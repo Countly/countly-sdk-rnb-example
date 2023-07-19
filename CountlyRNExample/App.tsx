@@ -14,8 +14,8 @@ import CountlyConfig from 'countly-sdk-react-native-bridge/CountlyConfig';
 
 const successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
 const failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
-const COUNTLY_APP_KEY = '5b77e4c785410351f32d8aa286d2383195d13b93';
-const COUNTLY_SERVER_KEY = 'https://master.count.ly';
+const COUNTLY_APP_KEY = 'YOUR_API_KEY';
+const COUNTLY_SERVER_KEY = 'https://try.count.ly';
 
 class AttributionKey {
     static IDFA = 'idfa';
