@@ -4,6 +4,7 @@
  *
  * @format
  */
+/* eslint-disable */
 
 import React, { Component } from 'react';
 import { Text, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView, Platform, Alert } from 'react-native';
@@ -13,8 +14,8 @@ import CountlyConfig from 'countly-sdk-react-native-bridge/CountlyConfig';
 
 const successCodes = [100, 101, 200, 201, 202, 205, 300, 301, 303, 305];
 const failureCodes = [400, 402, 405, 408, 500, 501, 502, 505];
-const COUNTLY_APP_KEY = 'YOUR_APP_KEY';
-const COUNTLY_SERVER_KEY = 'https://xxx.count.ly';
+const COUNTLY_APP_KEY = '5b77e4c785410351f32d8aa286d2383195d13b93';
+const COUNTLY_SERVER_KEY = 'https://master.count.ly';
 
 class AttributionKey {
     static IDFA = 'idfa';
@@ -132,7 +133,7 @@ class Example extends Component {
         // .setHttpPostForced(false) // Set to "true" if you want HTTP POST to be used for all requests
         .enableApm() // Enable APM features, which includes the recording of app start time.
         .setPushTokenType(Countly.messagingMode.DEVELOPMENT) // Set messaging mode for push notifications
-        .setPushNotificationChannelInformation('ChannelName', 'ChannelDescription') // Set messaging mode for push notifications
+        .setPushNotificationChannelInformation('ChannelName', 'ChannelDescription') // Set channel name and description for push notifications
         .setPushNotificationAccentColor('#000000') // Set push notification accent color
         .configureIntentRedirectionCheck(['MainActivity'], ['com.countly.demo'])
         .setStarRatingDialogTexts('Title', 'Message', 'Dismiss')

@@ -10,7 +10,7 @@
         "test": "jest"
     },
     "dependencies": {
-        "countly-sdk-react-native-bridge": "23.2.4",
+        "countly-sdk-react-native-bridge": "file://../../countly-sdk-react-native-bridge/countly-sdk-react-native-bridge-23.2.4.tgz",
         "react": "18.2.0",
         "react-native": "0.71.0"
     },
