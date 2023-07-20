@@ -4,7 +4,6 @@
  *
  * @format
  */
-/* eslint-disable */
 
 import React, { Component } from 'react';
 import { Text, ScrollView, Image, View, TextInput, StyleSheet, SafeAreaView, Platform, Alert } from 'react-native';
