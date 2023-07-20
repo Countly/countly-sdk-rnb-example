@@ -131,7 +131,9 @@ class Example extends Component {
         // .pinnedCertificates("count.ly.cer") // It will ensure that connection is made with one of the public keys specified
         // .setHttpPostForced(false) // Set to "true" if you want HTTP POST to be used for all requests
         .enableApm() // Enable APM features, which includes the recording of app start time.
-        .pushTokenType(Countly.messagingMode.DEVELOPMENT, 'ChannelName', 'ChannelDescription') // Set messaging mode for push notifications
+        .setPushTokenType(Countly.messagingMode.DEVELOPMENT) // Set messaging mode for push notifications
+        .setPushNotificationChannelInformation('ChannelName', 'ChannelDescription') // Set channel name and description for push notifications
+        .setPushNotificationAccentColor('#000000') // Set push notification accent color
         .configureIntentRedirectionCheck(['MainActivity'], ['com.countly.demo'])
         .setStarRatingDialogTexts('Title', 'Message', 'Dismiss')
         .recordDirectAttribution('countly', campaignData)
