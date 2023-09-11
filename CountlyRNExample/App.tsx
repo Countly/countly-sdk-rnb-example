@@ -542,6 +542,29 @@ class Example extends Component {
         });
     };
 
+    showRating = () => {
+        Countly.getFeedbackWidgets((retrivedWidgets, error) => {
+            if (error != null) {
+                console.log('showRating Error : ' + error);
+            } else {
+                console.log('showRating Success : ' + retrivedWidgets.length);
+                const ratingWidget = retrivedWidgets.find((x) => x.type === 'rating');
+                if (ratingWidget) {
+                    Countly.presentFeedbackWidgetObject(
+                        ratingWidget,
+                        'Close',
+                        function () {
+                            console.log('showRating presentFeedbackWidgetObject : Widgetshown');
+                        },
+                        function () {
+                            console.log('showRating presentFeedbackWidgetObject : Widgetclosed');
+                        }
+                    );
+                }
+            }
+        });
+    };
+
     addCrashLog = () => {
         const timestamp = Math.floor(new Date().getTime() / 1000);
         Countly.addCrashLog('My crash log in string. Time: ' + timestamp.toString());
@@ -735,6 +758,7 @@ class Example extends Component {
                     <CountlyButton disabled={!this.state.ratingId} onPress={this.presentRatingWidgetUsingEditBox} title="Show Feedback using EditBox" color="#00b5ad" />
                     <CountlyButton onPress={this.showSurvey} title="Show Survey" color="#00b5ad" />
                     <CountlyButton onPress={this.showNPS} title="Show NPS" color="#00b5ad" />
+                    <CountlyButton onPress={this.showRating} title="Show Rating" color="#00b5ad" />
                     <CountlyButton onPress={this.eventSendThreshold} title="Set Event Threshold" color="#00b5ad" />
                     <CountlyButton onPress={this.setCustomCrashSegments} title="Set Custom Crash Segment" color="#00b5ad" />
                     <CountlyButton onPress={this.recordException} title="Record Exception" color="#00b5ad" />

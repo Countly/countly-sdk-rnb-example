@@ -1,10 +1,10 @@
 PODS:
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
-  - CountlyReactNative (23.2.1):
-    - CountlyReactNative/NotificationService (= 23.2.1)
+  - CountlyReactNative (23.6.0):
+    - CountlyReactNative/NotificationService (= 23.6.0)
     - React
-  - CountlyReactNative/NotificationService (23.2.1):
+  - CountlyReactNative/NotificationService (23.6.0):
     - React
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.71.0)
@@ -543,7 +543,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  CountlyReactNative: 77d0d606d8fc52d8785ddd0b3813c6083b86b3f5
+  CountlyReactNative: 7a67c409ff0a08188a0cf218aed596bacb323650
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 61839cba7a48c570b7ac3e1cd8a4d0948382202f
   FBReactNativeSpec: 5a14398ccf5e27c1ca2d7109eb920594ce93c10d
