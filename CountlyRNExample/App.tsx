@@ -654,7 +654,7 @@ class Example extends Component {
     };
 
     reportSurveyManually = () => {
-        Countly.getFeedbackWidgets((retrivedWidgets, error) => {
+        Countly.feedback.getAvailableFeedbackWidgets((retrivedWidgets, error) => {
             if (error != null) {
                 console.log('reportSurveyManually Error : ' + error);
             } else {
@@ -668,7 +668,7 @@ class Example extends Component {
     };
 
     reportSurvey = (chosenWidget) => {
-        Countly.getFeedbackWidgetData(chosenWidget, (retrievedWidgetData, error) => {
+        Countly.feedback.getFeedbackWidgetData(chosenWidget, (retrievedWidgetData, error) => {
             if (error != null) {
                 console.log('reportSurvey Error : ' + error);
             } else {
@@ -719,7 +719,7 @@ class Example extends Component {
                     }
                 }
                 console.log('reportFeedbackWidgetManually Success : ', retrievedWidgetData, segments);
-                Countly.reportFeedbackWidgetManually(chosenWidget, retrievedWidgetData ?? {}, segments);
+                Countly.feedback.reportFeedbackWidgetManually(chosenWidget, retrievedWidgetData ?? {}, segments);
             }
         }).catch((e) => {
             console.log('catch', e);
@@ -727,7 +727,7 @@ class Example extends Component {
     };
 
     reportNPSManually = () => {
-        Countly.getFeedbackWidgets((retrivedWidgets, error) => {
+        Countly.feedback.getAvailableFeedbackWidgets((retrivedWidgets, error) => {
             if (error != null) {
                 console.log('reportNPSManually Error : ' + error);
             } else {
@@ -741,13 +741,13 @@ class Example extends Component {
     };
 
     reportNPS = (chosenWidget) => {
-        Countly.getFeedbackWidgetData(chosenWidget, (retrievedWidgetData, error) => {
+        Countly.feedback.getFeedbackWidgetData(chosenWidget, (retrievedWidgetData, error) => {
             if (error != null) {
                 console.log('reportSurvey Error : ' + error);
             } else {
-                const segments = {'rating': 8};
+                const segments = {'rating': this.getRandomInt(10)};
                 console.log('reportSurvey Success : ', retrievedWidgetData, segments);
-                Countly.reportFeedbackWidgetManually(chosenWidget, retrievedWidgetData, segments);
+                Countly.feedback.reportFeedbackWidgetManually(chosenWidget, retrievedWidgetData, segments);
             }
         }).catch((e) => {
             console.log('catch', e);
@@ -755,7 +755,7 @@ class Example extends Component {
     };
 
     reportRatingManually = () => {
-        Countly.getFeedbackWidgets((retrivedWidgets, error) => {
+        Countly.feedback.getAvailableFeedbackWidgets((retrivedWidgets, error) => {
             if (error != null) {
                 console.log('reportRatingManually Error : ' + error);
             } else {
@@ -769,13 +769,13 @@ class Example extends Component {
     };
 
     reportRating = (chosenWidget) => {
-        Countly.getFeedbackWidgetData(chosenWidget, (retrievedWidgetData, error) => {
+        Countly.feedback.getFeedbackWidgetData(chosenWidget, (retrievedWidgetData, error) => {
             if (error != null) {
                 console.log('reportRating Error : ' + error);
             } else {
-                const segments = {'rating': 7, 'comment': 'Filled out comment' + this.getRandomInt(999999), 'email': 'test' + this.getRandomInt(999999) + '@yahoo.com'};
+                const segments = {'rating': this.getRandomInt(5), 'comment': 'Filled out comment' + this.getRandomInt(999999), 'email': 'test' + this.getRandomInt(999999) + '@yahoo.com'};
                 console.log('reportRating Success : ', retrievedWidgetData, segments);
-                Countly.reportFeedbackWidgetManually(chosenWidget, retrievedWidgetData, segments);
+                Countly.feedback.reportFeedbackWidgetManually(chosenWidget, retrievedWidgetData, segments);
             }
         }).catch((e) => {
             console.log('catch', e);
