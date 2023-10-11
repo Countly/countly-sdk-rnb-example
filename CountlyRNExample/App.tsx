@@ -653,6 +653,139 @@ class Example extends Component {
         Countly.recordIndirectAttribution(attributionValues);
     };
 
+    reportSurveyManually = () => {
+        Countly.feedback.getAvailableFeedbackWidgets((retrivedWidgets, error) => {
+            if (error != null) {
+                console.log('reportSurveyManually Error : ' + error);
+            } else {
+                console.log('reportSurveyManually Success : ' + retrivedWidgets.length);
+                const surveyWidget = retrivedWidgets.find((x) => x.type === 'survey');
+                if (surveyWidget) {
+                    this.reportSurvey(surveyWidget);
+                }
+            }
+        });
+    };
+
+    reportSurvey = (chosenWidget) => {
+        Countly.feedback.getFeedbackWidgetData(chosenWidget, (retrievedWidgetData, error) => {
+            if (error != null) {
+                console.log('reportSurvey Error : ' + error);
+            } else {
+                const segments = {};
+                if (retrievedWidgetData && retrievedWidgetData.size !== 0) {
+                    const questions = retrievedWidgetData['questions'];
+
+                    if (questions != null) {
+                        console.log('questions', questions);
+                        //iterate over all questions and set random answers
+                        for (let a = 0; a < questions.length; a++) {
+                            const question = questions[a];
+                            const wType = question['type'];
+                            const questionId = question['id'];
+                            const answerKey = 'answ-' + questionId;
+                            switch (wType) {
+                                //multiple answer question
+                                case 'multi':
+                                    const options = question['choices'];
+                                    let str = '';
+                                    for (let b = 0; b < options.length; b++) {
+                                        if (b % 2 == 0) {
+                                            if (b != 0) {
+                                                str += ',';
+                                            }
+                                            str += options[b]['key'];
+                                        }
+                                    }
+                                    segments[answerKey] = str;
+                                    break;
+                                case 'radio':
+                                //dropdown value selector
+                                case 'dropdown':
+                                    const choices = question['choices'];
+                                    const pick = this.getRandomInt(choices.length);
+                                    segments[answerKey] = choices[pick]['key'];
+                                    break;
+                                //text input field
+                                case 'text':
+                                    segments[answerKey] = 'Some random text ' + this.getRandomInt(999999999);
+                                    break;
+                                //rating picker
+                                case 'rating':
+                                    segments[answerKey] = this.getRandomInt(10);
+                                    break;
+                            }
+                        }
+                    }
+                }
+                console.log('reportFeedbackWidgetManually Success : ', retrievedWidgetData, segments);
+                Countly.feedback.reportFeedbackWidgetManually(chosenWidget, retrievedWidgetData ?? {}, segments);
+            }
+        }).catch((e) => {
+            console.log('catch', e);
+        });
+    };
+
+    reportNPSManually = () => {
+        Countly.feedback.getAvailableFeedbackWidgets((retrivedWidgets, error) => {
+            if (error != null) {
+                console.log('reportNPSManually Error : ' + error);
+            } else {
+                console.log('reportNPSManually Success : ' + retrivedWidgets.length);
+                const npsWidget = retrivedWidgets.find((x) => x.type === 'nps');
+                if (npsWidget) {
+                    this.reportNPS(npsWidget);
+                }
+            }
+        });
+    };
+
+    reportNPS = (chosenWidget) => {
+        Countly.feedback.getFeedbackWidgetData(chosenWidget, (retrievedWidgetData, error) => {
+            if (error != null) {
+                console.log('reportSurvey Error : ' + error);
+            } else {
+                const segments = {'rating': this.getRandomInt(10)};
+                console.log('reportSurvey Success : ', retrievedWidgetData, segments);
+                Countly.feedback.reportFeedbackWidgetManually(chosenWidget, retrievedWidgetData, segments);
+            }
+        }).catch((e) => {
+            console.log('catch', e);
+        });
+    };
+
+    reportRatingManually = () => {
+        Countly.feedback.getAvailableFeedbackWidgets((retrivedWidgets, error) => {
+            if (error != null) {
+                console.log('reportRatingManually Error : ' + error);
+            } else {
+                console.log('reportRatingManually Success : ' + retrivedWidgets.length);
+                const npsWidget = retrivedWidgets.find((x) => x.type === 'rating');
+                if (npsWidget) {
+                    this.reportRating(npsWidget);
+                }
+            }
+        });
+    };
+
+    reportRating = (chosenWidget) => {
+        Countly.feedback.getFeedbackWidgetData(chosenWidget, (retrievedWidgetData, error) => {
+            if (error != null) {
+                console.log('reportRating Error : ' + error);
+            } else {
+                const segments = {'rating': this.getRandomInt(5), 'comment': 'Filled out comment' + this.getRandomInt(999999), 'email': 'test' + this.getRandomInt(999999) + '@yahoo.com'};
+                console.log('reportRating Success : ', retrievedWidgetData, segments);
+                Countly.feedback.reportFeedbackWidgetManually(chosenWidget, retrievedWidgetData, segments);
+            }
+        }).catch((e) => {
+            console.log('catch', e);
+        });
+    };
+
+    getRandomInt = (max) => {
+        return Math.floor(Math.random() * max);
+    };
+
     test = () => {
         this.onInit();
         this.onStart();
@@ -759,6 +892,9 @@ class Example extends Component {
                     <CountlyButton onPress={this.showSurvey} title="Show Survey" color="#00b5ad" />
                     <CountlyButton onPress={this.showNPS} title="Show NPS" color="#00b5ad" />
                     <CountlyButton onPress={this.showRating} title="Show Rating" color="#00b5ad" />
+                    <CountlyButton onPress={this.reportSurveyManually} title="Report Survey Manually" color="#f0f0f0" />
+                    <CountlyButton onPress={this.reportNPSManually} title="Report NPS Manually" color="#f0f0f0" />
+                    <CountlyButton onPress={this.reportRatingManually} title="Report Rating Manually" color="#f0f0f0" />
                     <CountlyButton onPress={this.eventSendThreshold} title="Set Event Threshold" color="#00b5ad" />
                     <CountlyButton onPress={this.setCustomCrashSegments} title="Set Custom Crash Segment" color="#00b5ad" />
                     <CountlyButton onPress={this.recordException} title="Record Exception" color="#00b5ad" />
