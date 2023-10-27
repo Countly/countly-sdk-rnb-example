@@ -497,21 +497,21 @@ class Example extends Component {
     };
 
     showSurvey = () => {
-        Countly.getFeedbackWidgets((retrivedWidgets, error) => {
+        Countly.feedback.getAvailableFeedbackWidgets((retrivedWidgets, error) => {
             if (error != null) {
                 console.log('showSurvey Error : ' + error);
             } else {
                 console.log('showSurvey Success : ' + retrivedWidgets.length);
                 var surveyWidget = retrivedWidgets.find((x) => x.type === 'survey');
                 if (surveyWidget) {
-                    Countly.presentFeedbackWidgetObject(
+                    Countly.feedback.presentFeedbackWidget(
                         surveyWidget,
                         'Close',
                         function () {
-                            console.log('showSurvey presentFeedbackWidgetObject : ' + 'Widgetshown');
+                            console.log('showSurvey presentFeedbackWidget : ' + 'Widgetshown');
                         },
                         function () {
-                            console.log('showSurvey presentFeedbackWidgetObject : ' + 'Widgetclosed');
+                            console.log('showSurvey presentFeedbackWidget : ' + 'Widgetclosed');
                         }
                     );
                 }
@@ -520,21 +520,21 @@ class Example extends Component {
     };
 
     showNPS = () => {
-        Countly.getFeedbackWidgets((retrivedWidgets, error) => {
+        Countly.feedback.getAvailableFeedbackWidgets((retrivedWidgets, error) => {
             if (error != null) {
                 console.log('showNPS Error : ' + error);
             } else {
                 console.log('showNPS Success : ' + retrivedWidgets.length);
                 var npsWidget = retrivedWidgets.find((x) => x.type === 'nps');
                 if (npsWidget) {
-                    Countly.presentFeedbackWidgetObject(
+                    Countly.feedback.presentFeedbackWidget(
                         npsWidget,
                         'Close',
                         function () {
-                            console.log('showNPS presentFeedbackWidgetObject : ' + 'Widgetshown');
+                            console.log('showNPS presentFeedbackWidget : ' + 'Widgetshown');
                         },
                         function () {
-                            console.log('showNPS presentFeedbackWidgetObject : ' + 'Widgetclosed');
+                            console.log('showNPS presentFeedbackWidget : ' + 'Widgetclosed');
                         }
                     );
                 }
@@ -543,21 +543,21 @@ class Example extends Component {
     };
 
     showRating = () => {
-        Countly.getFeedbackWidgets((retrivedWidgets, error) => {
+        Countly.feedback.getAvailableFeedbackWidgets((retrivedWidgets, error) => {
             if (error != null) {
                 console.log('showRating Error : ' + error);
             } else {
                 console.log('showRating Success : ' + retrivedWidgets.length);
                 const ratingWidget = retrivedWidgets.find((x) => x.type === 'rating');
                 if (ratingWidget) {
-                    Countly.presentFeedbackWidgetObject(
+                    Countly.feedback.presentFeedbackWidget(
                         ratingWidget,
                         'Close',
                         function () {
-                            console.log('showRating presentFeedbackWidgetObject : Widgetshown');
+                            console.log('showRating presentFeedbackWidget : Widgetshown');
                         },
                         function () {
-                            console.log('showRating presentFeedbackWidgetObject : Widgetclosed');
+                            console.log('showRating presentFeedbackWidget : Widgetclosed');
                         }
                     );
                 }
