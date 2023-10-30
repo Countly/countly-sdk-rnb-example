@@ -2,7 +2,7 @@
 
 ## Countly React Native Bridge SDK test application
 
-This repository includes example projects of React Native to demonstrate how to use [Countly React Native Bridge SDK](https://github.com/Countly/countly-sdk-react-native-bridge).
+This repository includes example projects of React Native to demonstrate how to use [Countly React Native Bridge SDK](https://github.com/Countly/countly-sdk-react-native-bridge). The Countly React Native Bridge SDK is intended to be used with [Countly Lite](https://github.com/Countly/countly-server) or [Countly Enterprise](https://count.ly/product).
 
 ## What is Countly?
 [Countly](https://count.ly) is a product analytics solution and innovation enabler that helps teams track product performance and customer journey and behavior across [mobile](https://count.ly/mobile-analytics), [web](https://count.ly/web-analytics),
@@ -12,7 +12,7 @@ Track, measure, and take action - all without leaving Countly.
 
 * **Questions or feature requests?** [Join the Countly Community on Discord](https://discord.gg/countly)
 * **Looking for the Countly Server?** [Countly Community Edition repository](https://github.com/Countly/countly-server)
-* **Looking for other Countly SDKs?** [An overview of all Countly SDKs for mobile, web and desktop](https://support.count.ly/hc/en-us/articles/360037236571-Downloading-and-Installing-SDKs#officially-supported-sdks)
+* **Looking for other Countly SDKs?** [An overview of all Countly SDKs for mobile, web and desktop](https://support.count.ly/hc/en-us/articles/360037236571-Downloading-and-Installing-SDKs#h_01H9QCP8G5Y9PZJGERZ4XWYDY9)
 
 ## Using the test application
 
@@ -31,7 +31,7 @@ This app serves as a simple example for building an app using the [Countly React
 To run the Example App, you need to be able to build React Native apps for Android and iOS on your machine.
 Refer to the [React Native getting started guide](https://reactnative.dev/docs/0.61/enviroment-setup) if you need help setting up your React Native environment.
 
-For more information on how to acquire your application key (appKey) and server URL, check [here](https://support.count.ly/hc/en-us/articles/900000908046-Getting-started-with-SDKs#acquiring-your-application-key-and-server-url).
+For more information on how to acquire your application key (appKey) and server URL, check [here](https://support.count.ly/hc/en-us/articles/900000908046-Getting-started-with-SDKs#h_01HABSX9KX44C9SF48WRPQNCP3).
 
 ### Building
 Clone this repository
