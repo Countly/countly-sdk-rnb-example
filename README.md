@@ -1,4 +1,4 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbf5985110954a4c9a1be87700a77d2e)](https://www.codacy.com/gh/Countly/countly-sdk-rnb-example/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Countly/countly-sdk-rnb-example&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbf5985110954a4c9a1be87700a77d2e)](https://app.codacy.com/gh/Countly/countly-sdk-rnb-example/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 ## Countly React Native Bridge SDK test application
 
