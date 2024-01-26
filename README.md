@@ -29,7 +29,7 @@ This app serves as a simple example for building an app using the [Countly React
 
 ### Prerequisites
 To run the Example App, you need to be able to build React Native apps for Android and iOS on your machine.
-Refer to the [React Native getting started guide](https://reactnative.dev/docs/0.61/enviroment-setup) if you need help setting up your React Native environment.
+Refer to the [React Native getting started guide](https://reactnative.dev/docs/environment-setup) if you need help setting up your React Native environment.
 
 For more information on how to acquire your application key (appKey) and server URL, check [here](https://support.count.ly/hc/en-us/articles/900000908046-Getting-started-with-SDKs#h_01HABSX9KX44C9SF48WRPQNCP3).
 
