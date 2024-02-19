@@ -144,6 +144,11 @@ class Example extends Component {
         .recordDirectAttribution('countly', campaignData)
         .recordIndirectAttribution(attributionValues);
 
+        countlyConfig.apm.enableAppStartTimeTracking()
+        .enableForegroundBackgroundTracking()
+        .enableManualAppLoadedTrigger()
+        .setAppStartTimestampOverride(11223344);
+
         await Countly.initWithConfig(countlyConfig); // Initialize the countly SDK.
         Countly.appLoadingFinished();
         /**
